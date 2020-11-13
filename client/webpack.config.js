@@ -5,6 +5,7 @@ const { HotModuleReplacementPlugin } = require('webpack')
 
 
 module.exports = {
+    mode: 'development',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, '/dist'),
@@ -18,6 +19,7 @@ module.exports = {
         }),
         new HotModuleReplacementPlugin(),
     ],
+    devtool : 'inline-source-map',
     module: {
         rules: [
             {
