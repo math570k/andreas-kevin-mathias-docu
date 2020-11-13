@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlguin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { HotModuleReplacementPlugin } = require('webpack')
 
 
@@ -12,7 +12,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({ template: './src/index.html' }),
-        new MiniCssExtractPlguin({
+        new MiniCssExtractPlugin({
             filename: '[name].bundle.css',
             chunkFilename: '[id].css'
         }),
@@ -28,7 +28,7 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: [
-                    MiniCssExtractPlguin.loader,
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {

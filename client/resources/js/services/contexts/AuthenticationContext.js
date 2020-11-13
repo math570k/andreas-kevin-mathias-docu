@@ -1,9 +1,6 @@
 import React from "react";
 import { useQuery, gql } from '@apollo/client';
 
-const sleep = time => new Promise(resolve => setTimeout(resolve, time))
-
-
 const AuthContext = React.createContext(null);
 function AuthProvider({children}) {
     const [state, setState] = React.useState({
@@ -20,7 +17,13 @@ function AuthProvider({children}) {
 
     const login = () => {}
 
-    const register = () => {}
+    const register = (form) => {
+        const userRegister = gql`
+        mutation {
+            register(email: "test1@email.com", password: "test123")
+            }
+        `
+    }
 
     const logout = () => {}
 

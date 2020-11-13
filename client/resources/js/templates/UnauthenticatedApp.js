@@ -1,9 +1,13 @@
 import React from "react";
 
 export default function UnauthenticatedApp(props) {
+    console.log('hit this page')
+
     return (
         <div>
-            {/*Unauthenticated App goes here*/}
+
+            You are not authenticated
+
         </div>
     )
 }
