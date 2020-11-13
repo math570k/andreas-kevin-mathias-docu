@@ -19,4 +19,12 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({ template: './src/index.html' }),
     ],
+    devServer: {
+        port: 3000,
+        host: '0.0.0.0',
+        watchOptions: {
+            aggregateTimeout: 500,
+            poll: 1000
+        }
+    }
 };

@@ -1,0 +1,62 @@
+version: '3.4'
+
+services:
+
+    postgres:
+        image: postgres
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: supersecret
+            POSTGRES_DB: docu
+
+    mongodb:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        environment: 
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: supersecret
+
+    adminer:
+        image: dockette/adminer:full
+        restart: always
+        links:
+            - postgres:postgres
+            - mongodb:mongodb
+        ports:
+            - 5000:80
+
+    server:
+        build: ./server
+        depends_on: 
+            - postgres
+            - mongodb
+        expose: 
+            - 8000
+        ports:
+            - 8000:8000
+        volumes: 
+            - ./server/src:/server/src
+        links:
+            - postgres
+            - mongodb
+        command: npm run start:dev
+
+    client:
+        build: ./client
+        expose: 
+            - 3000
+        ports:
+            - 3000:3000
+        volumes: 
+            - ./client/src:/client/src
+        links:
+            - server
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+        command: npm run start:dev
+        stdin_open: true
