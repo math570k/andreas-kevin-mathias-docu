@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlguin = require('mini-css-extract-plugin');
+const { HotModuleReplacementPlugin } = require('webpack')
+
 
 module.exports = {
     entry: './src/index.js',
@@ -13,7 +15,8 @@ module.exports = {
         new MiniCssExtractPlguin({
             filename: '[name].bundle.css',
             chunkFilename: '[id].css'
-        })
+        }),
+        new HotModuleReplacementPlugin(),
     ],
     module: {
         rules: [
@@ -54,6 +57,7 @@ module.exports = {
         watchOptions: {
             aggregateTimeout: 500,
             poll: 1000
-        }
+        },
+        hot: true
     }
 };
