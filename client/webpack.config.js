@@ -6,13 +6,13 @@ const { HotModuleReplacementPlugin } = require('webpack')
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: path.resolve(__dirname, 'src', 'index.js'),
     output: {
-        path: path.resolve(__dirname, '/dist'),
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './src/index.html' }),
+        new HtmlWebpackPlugin({ template: './src/index.html', filename: 'index.html' }),
         new MiniCssExtractPlugin({
             filename: '[name].bundle.css',
             chunkFilename: '[id].css'
@@ -20,6 +20,7 @@ module.exports = {
         new HotModuleReplacementPlugin(),
     ],
     devtool : 'inline-source-map',
+    
     module: {
         rules: [
             {
@@ -28,7 +29,7 @@ module.exports = {
                 use: 'babel-loader',
             },
             {
-                test: /\.css$/i,
+                test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
@@ -54,12 +55,10 @@ module.exports = {
         ],
     },
     devServer: {
+        contentBase: path.resolve(__dirname, 'dist'),
+        compress: true,
         port: 3000,
-        host: '0.0.0.0',
-        watchOptions: {
-            aggregateTimeout: 500,
-            poll: 1000
-        },
-        hot: true
+        hot: true,
+        host: 'localhost',
     }
 };

@@ -3,8 +3,7 @@ import React from "react";
 export default function AuthenticatedApp(props) {
     return (
         <div>
-            {/*Authenticated App goes here*/}
-            You are authenticated
+            {/*Authenticated App go es hereassds*/}
         </div>
     )
 }

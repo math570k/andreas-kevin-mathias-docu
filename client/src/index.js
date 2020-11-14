@@ -15,6 +15,6 @@ ReactDOM.render(
         <AuthProvider>
             <App/>
         </AuthProvider>
-    </ApolloProvider>,
+    </ApolloProvider>, 
     document.getElementById("root")
 );

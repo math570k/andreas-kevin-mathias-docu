@@ -1,0 +1,7 @@
+.header-back {
+    transition: all 0.5s ease;
+}
+
+.header-dropdown {
+    display: none;
+}
