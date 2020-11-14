@@ -3,7 +3,6 @@ import {useAuth} from "../resources/js/services/contexts/AuthenticationContext";
 import AuthenticatedApp from "../resources/js/templates/AuthenticatedApp";
 import Header from '../resources/js/templates/Header';
 import UnauthenticatedApp from "../resources/js/templates/UnauthenticatedApp";
-import "../resources/css/site.css";
 
 const App = () => {
     // const {user} = useAuth();
@@ -24,7 +23,6 @@ const App = () => {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                     {/* DROPDOWN */}
-
                     <div class="header-dropdown" className={dropdown && "is-active"}>
                         <p></p>
                     </div>

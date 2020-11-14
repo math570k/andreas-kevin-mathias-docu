@@ -1,26 +1,20 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { HotModuleReplacementPlugin } = require('webpack')
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
     entry: path.resolve(__dirname, 'src', 'index.js'),
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-    },
     plugins: [
         new HtmlWebpackPlugin({ template: './src/index.html', filename: 'index.html' }),
         new MiniCssExtractPlugin({
             filename: '[name].bundle.css',
             chunkFilename: '[id].css'
         }),
+        new CleanWebpackPlugin(),
         new HotModuleReplacementPlugin(),
     ],
-    devtool : 'inline-source-map',
-    
     module: {
         rules: [
             {
@@ -54,11 +48,8 @@ module.exports = {
             },
         ],
     },
-    devServer: {
-        contentBase: path.resolve(__dirname, 'dist'),
-        compress: true,
-        port: 3000,
-        hot: true,
-        host: '0.0.0.0',
-    }
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+    },
 };
