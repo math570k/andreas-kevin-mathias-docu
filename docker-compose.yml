@@ -54,6 +54,7 @@ services:
             - 3000:3000
         volumes: 
             - ./client/src:/client/src
+            - ./client/resources:/client/resources
         links:
             - server
         environment:
