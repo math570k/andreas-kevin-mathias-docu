@@ -6,8 +6,6 @@ import UnauthenticatedApp from "../resources/js/templates/UnauthenticatedApp";
 
 const App = () => {
     // const {user} = useAuth();
-
-
     return (
         // user ? <AuthenticatedApp/> : <UnauthenticatedApp/>
         <Header />
