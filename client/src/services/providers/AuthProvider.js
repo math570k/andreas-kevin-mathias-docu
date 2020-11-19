@@ -1,5 +1,5 @@
 import React from "react";
-import {useLoginMutation, useRegisterMutation} from "../../../../graphql/auth";
+import {useLoginMutation, useRegisterMutation} from "../../graphql/auth";
 
 //todo move this to it's own util
 const getToken = () => {

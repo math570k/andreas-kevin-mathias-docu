@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {useAuth} from "./resources/js/services/providers/AuthProvider";
-import AuthenticatedApp from "./resources/js/templates/AuthenticatedApp";
-import Header from './resources/js/templates/Header';
-import UnauthenticatedApp from "./resources/js/templates/UnauthenticatedApp";
+import {useAuth} from "./services/providers/AuthProvider";
+import AuthenticatedApp from "./templates/AuthenticatedApp";
+import Header from './templates/Header';
+import UnauthenticatedApp from "./templates/UnauthenticatedApp";
 
 const App = () => {
     const {user} = useAuth();

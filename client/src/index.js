@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './resources/styles/css/main.css';
-import "./resources/styles/site.scss"
-import AppProviders from "./resources/js/services/providers/AppProviders";
+import './styles/css/main.css';
+import "./styles/site.scss"
+import AppProviders from "./services/providers/AppProviders";
 
 ReactDOM.render(
     <AppProviders>
