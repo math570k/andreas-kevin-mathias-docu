@@ -23,16 +23,6 @@ module.exports = {
                 use: 'babel-loader',
             },
             {
-                test: /\.scss$/,
-                use: [{
-                  loader: "style-loader"
-                }, {
-                  loader: "css-loader" 
-                }, {
-                  loader: "sass-loader"
-                }]
-            },
-            {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -48,7 +38,9 @@ module.exports = {
                             postcssOptions: {
                                 ident: 'postcss',
                                 plugins: [
+                                    require('postcss-import'),
                                     require('tailwindcss'),
+                                    require('postcss-nested'),
                                     require('autoprefixer'),
                                 ],
                             },

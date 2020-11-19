@@ -6,7 +6,7 @@ export default function Header(props) {
 
     return (
         <div className="grid grid-cols-12 header">
-            <div className="col-span-2 bg-blue-darker h-16 header__project">
+            <div className="col-span-2 bg-black-500 h-16 header__project">
                 <button onClick={() => setDropdown(!dropdown)} className="container px-8 h-16 flex items-center cursor-pointer justify-between">
 
                     {/* STATIC */}
@@ -25,7 +25,7 @@ export default function Header(props) {
                         </div>
                 </CSSTransition>
             </div>
-            <div className="col-span-10 bg-blue">
+            <div className="col-span-10 bg-black-400">
                 <div className="container px-8 h-16 flex items-center">
                     {/* STATIC */}
                     <a href="#" className="header__back-button flex items-center cursor-pointer text-xl font-semibold text-gray">
