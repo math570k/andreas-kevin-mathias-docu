@@ -6,8 +6,8 @@
     &__project {
         position: relative;
     }
-    
-    &__project:hover {        
+
+    &__project:hover {
         svg {
             stroke: white;
             transform: translateY(5px);
@@ -24,14 +24,14 @@
             stroke: white;
             transform: translateX(-5px);
         }
-        color: white; 
+        color: white;
     }
 
     &__dropdown {
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: #CCC; 
+        background-color: #CCC;
         z-index: -1;
     }
 }
