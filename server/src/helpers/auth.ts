@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { sign, verify } from "jsonwebtoken";
-import { User } from "../entity/User";
-import { Response, Request } from "express";
+import {sign, verify} from "jsonwebtoken";
+import {User} from "../entity/User";
+import {Response, Request} from "express";
 
 /**
  * Create a access token for the passed user
  * @param   {User} user
  * @return  {string}
  */
-export const createAccessToken = (user: User) : string => {
-    return sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: "15m" });
+export const createAccessToken = (user: User): string => {
+    return sign({userId: user.id}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: "15m"});
 }
 
 /**
@@ -17,11 +17,11 @@ export const createAccessToken = (user: User) : string => {
  * @param   {User} user
  * @return  {string}
  */
-export const createRefreshToken = (user: User) : string => {
+export const createRefreshToken = (user: User): string => {
     return sign(
-        { userId: user.id, tokenVersion: user.tokenVersion }, 
-        process.env.REFRESH_TOKEN_SECRET!, 
-        { expiresIn: "7d" }
+        {userId: user.id, tokenVersion: user.tokenVersion},
+        process.env.REFRESH_TOKEN_SECRET!,
+        {expiresIn: "7d"}
     );
 }
 
@@ -31,11 +31,17 @@ export const createRefreshToken = (user: User) : string => {
  * @param   {string} token
  * @return  {void}
  */
-export const sendRefreshToken = (res: Response, token: string) : void => {
+export const sendRefreshToken = (res: Response, token: string): void => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+
     res.cookie(
-        "jid", 
-        token, 
-        { httpOnly: true }
+        "jid",
+        token,
+        {
+            httpOnly: true,
+            expires: date,
+        }
     );
 }
 
@@ -45,21 +51,21 @@ export const sendRefreshToken = (res: Response, token: string) : void => {
  * @param  {Response} res
  * @return {Promise<Response>}
  */
-export const createAccessTokenFromRefreshToken = async (req: Request, res: Response) : Promise<Response> => {
+export const createAccessTokenFromRefreshToken = async (req: Request, res: Response): Promise<Response> => {
     const token = req.cookies.jid;
 
     if (!token) {
         return sendEmptyTokenResponse(res);
     }
-    
+
     let payload: any = null;
     try {
         payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
-    } catch(e) {
+    } catch (e) {
         return sendEmptyTokenResponse(res);
     }
 
-    const user = await User.findOne({ id: payload.userId });
+    const user = await User.findOne({id: payload.userId});
 
     if (!user || user.tokenVersion !== payload.tokenVersion) {
         return sendEmptyTokenResponse(res);
@@ -67,7 +73,7 @@ export const createAccessTokenFromRefreshToken = async (req: Request, res: Respo
 
     sendRefreshToken(res, createRefreshToken(user));
 
-    return res.send({ ok: true, accessToken: createAccessToken(user) });
+    return res.send({ok: true, accessToken: createAccessToken(user)});
 }
 
 /**
@@ -75,6 +81,6 @@ export const createAccessTokenFromRefreshToken = async (req: Request, res: Respo
  * @param {Response}
  * @return {Response}
  */
-export const sendEmptyTokenResponse = (res: Response) : Response => {
-    return res.send({ ok: false, accessToken: "" });
+export const sendEmptyTokenResponse = (res: Response): Response => {
+    return res.send({ok: false, accessToken: ""});
 }

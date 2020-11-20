@@ -1,18 +1,6 @@
 import React from "react";
 import {useLoginMutation, useRegisterMutation} from "../../graphql/auth";
-
-//todo move this to it's own util
-const getToken = () => {
-    return window.localStorage.getItem('token');
-}
-
-const setToken = (token) => {
-    return window.localStorage.setItem('token', token);
-}
-
-const removeToken = () => {
-    return window.localStorage.removeItem('token');
-}
+import {refreshAccessToken, removeToken, setAccessToken} from "../utils/accessToken";
 
 const AuthContext = React.createContext(null);
 
@@ -26,27 +14,33 @@ function AuthProvider(props) {
         user: null,
     })
 
-    const initialAuthorization = () => {
-        const authToken = getToken()
-
-        if(authToken) {
-            return setState({
-                status: 'resolved',
-                error: null,
-                user: authToken
-            })
-        }
-
-        return setState({
-            status: 'idle',
+    const fetchInitialAccessToken = () => {
+        console.log('i ran')
+        setState({
+            status: 'pending',
             error: null,
             user: null,
         })
+
+        refreshAccessToken()
+            .then(accessToken => {
+                console.log('got in here')
+                setState({
+                    status: 'resolved',
+                    error: null,
+                    user: accessToken,
+                })
+            })
     }
 
     React.useEffect(() => {
-        initialAuthorization()
+        fetchInitialAccessToken()
     }, [])
+
+    //Display loading until we have determined whether or not there's an available access token
+    if(state.status === 'pending' || state.status === 'idle') {
+        return <div>...loading</div>
+    }
 
     const register = (form) => {
         handleRegister({
@@ -75,7 +69,7 @@ function AuthProvider(props) {
             }
         })
             .then(({data}) => {
-                setToken(data.login.accessToken)
+                setAccessToken(data.login.accessToken)
                 setState({
                     status: 'resolved',
                     error: null,
@@ -85,14 +79,14 @@ function AuthProvider(props) {
             .catch(error => {
                 setState({
                     status: 'rejected',
-                    error: error,
+                    error: error.message,
                     user: null,
                 })
             })
     }
 
     const logout = () => {
-        removeToken()
+        removeToken();
         setState({
             status: 'idle',
             error: null,
@@ -105,6 +99,7 @@ function AuthProvider(props) {
         login,
         logout,
         user: state.user,
+        error: state.error,
     }
 
     return <AuthContext.Provider value={authAPI} {...props} />
