@@ -1,9 +1,13 @@
+import { SectionResolver } from './resolvers/SectionResolver';
+import { ProjectResolver } from './resolvers/ProjectResolver';
 /* eslint-disable no-console */
 import "reflect-metadata";
 import express from "express";
 import {ApolloServer} from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import {UserResolver} from "./resolvers/UserResolver";
+import { PageResolver } from './resolvers/PageResolver';
+import { OrganizationResolver } from './resolvers/OrganizationResolver';
 import { createConnection } from "typeorm";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
@@ -38,7 +42,14 @@ const PORT = 8000;
      */
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [UserResolver]
+            resolvers: [
+                UserResolver, 
+                OrganizationResolver, 
+                PageResolver, 
+                ProjectResolver, 
+                SectionResolver
+            ],
+            validate: false
         }),
         context: ({ req, res }) => ({ req, res })
     });
