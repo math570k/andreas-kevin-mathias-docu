@@ -11,6 +11,7 @@ module.exports = merge(common, {
         port: 3000,
         hot: true,
         host: '0.0.0.0',
+        historyApiFallback: true,
         proxy: {
             context: ['/refresh_token', '/graphql'],
             target: 'http://server:8000/',

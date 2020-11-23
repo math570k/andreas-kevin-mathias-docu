@@ -1,5 +1,6 @@
 import React from "react";
 import {useAuth} from "../services/providers/AuthProvider";
+import Page from "../ui/layout/Page";
 
 export default function Register() {
     const [email, setEmail] = React.useState('');
@@ -10,7 +11,7 @@ export default function Register() {
     const {register} = useAuth();
 
     return (
-        <div>
+        <Page>
             Register Form
             <form onSubmit={e => {
                 e.preventDefault()
@@ -23,6 +24,6 @@ export default function Register() {
                 <input value={lastName} type={'text'} onChange={e => setLastName(e.target.value)}/>
                 <button type={'submit'}>Submit</button>
             </form>
-        </div>
+        </Page>
     )
 }

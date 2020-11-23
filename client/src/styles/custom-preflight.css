@@ -1,0 +1,9 @@
+@layer base {
+   body {
+       margin: 0;
+       padding: 0;
+       font-family: sans-serif;
+       line-height: 24px;
+       @apply min-h-screen;
+   }
+}

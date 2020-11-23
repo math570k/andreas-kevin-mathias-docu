@@ -1,6 +1,8 @@
 import React from "react";
 import {useAuth} from "../services/providers/AuthProvider";
 import {useByeQuery} from "../graphql/test";
+import Header from "./Header";
+import Home from "../pages/Home";
 
 export default function AuthenticatedApp(props) {
     const {data, error, refetch} = useByeQuery();
@@ -8,11 +10,17 @@ export default function AuthenticatedApp(props) {
     const {logout} = useAuth()
 
     return (
-        <div>
+        <React.Fragment>
             {/*Authenticated App*/}
-            <button onClick={() => refetch()}>refetch</button>
-            You are currently Authenticated <br/>
-            <button onClick={() => logout()}>logout</button>
-        </div>
+            <Header/>
+            <main className={'grid grid-cols-12 min-h-full'}>
+                <div className={'col-span-2'}>
+                    sidebar
+                </div>
+                <div className={'col-span-10'}>
+                    <Home />
+                </div>
+            </main>
+        </React.Fragment>
     )
 }

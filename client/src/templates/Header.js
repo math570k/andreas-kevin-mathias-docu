@@ -5,7 +5,7 @@ export default function Header(props) {
     const [dropdown, setDropdown] = useState(false)
 
     return (
-        <div className="grid grid-cols-12 header">
+        <header className="grid grid-cols-12 header">
             <div className="col-span-2 bg-black-500 h-16 header__project">
                 <button onClick={() => setDropdown(!dropdown)} className="container px-8 h-16 flex items-center cursor-pointer justify-between">
 
@@ -38,6 +38,6 @@ export default function Header(props) {
                     </a>
                 </div>
             </div>
-        </div>
+        </header>
     )
 }
