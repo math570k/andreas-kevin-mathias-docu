@@ -7,7 +7,7 @@ import {UserResolver} from "./resolvers/UserResolver";
 import { createConnection } from "typeorm";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
-import { createAccessTokenFromRefreshToken } from "./helpers/auth";
+import { createAccessTokenFromRefreshToken, removeRefreshToken } from "./helpers/auth";
 
 const PORT = 8000;
 
@@ -26,6 +26,11 @@ const PORT = 8000;
      * Setup route for refresh tokens
      */
     app.post("/refresh_token", createAccessTokenFromRefreshToken);
+
+    /*
+    * Logout route that removes cookie
+    */
+    app.post("/remove_refresh_token", removeRefreshToken);
 
     /*
      * Create database connection

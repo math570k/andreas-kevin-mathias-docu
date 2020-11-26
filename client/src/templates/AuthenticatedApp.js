@@ -16,6 +16,7 @@ export default function AuthenticatedApp(props) {
             <main className={'grid grid-cols-12 min-h-full'}>
                 <div className={'col-span-2'}>
                     sidebar
+                    <button onClick={() => logout()}>logout</button>
                 </div>
                 <div className={'col-span-10'}>
                     <Home />
