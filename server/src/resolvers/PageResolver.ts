@@ -1,3 +1,4 @@
+import { BaseEntity } from 'typeorm';
 import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
 import { Page } from "../entity/Page";
 
@@ -11,9 +12,6 @@ class IPageType {
 
     @Field(() => Int, { nullable: true })
     order: number
-
-    @Field(() => Int)
-    projectId: number
 }
 
 @Resolver()
@@ -22,17 +20,15 @@ export class PageResolver {
         // Create
         @Mutation(() => Boolean)
         async createPage(
-            @Arg("section_id", () => IPageType) section_id : IPageType,
+            @Arg("project_id", () => Int) project_id : BaseEntity,
             @Arg("page", () => IPageType) page : IPageType
         ) : Promise<boolean> {
-
-            await Page.create({...page, project: section_id}).save().catch((err: any) => {
+            await Page.create({...page, project: project_id}).save().catch((err: any) => {
                 switch (err.code) {
                   case 'ER_DUP_ENTRY':
                     return Error("Something went wrong")
                 } return;
             })
-    
             return true
         }
     
