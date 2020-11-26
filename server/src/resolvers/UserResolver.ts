@@ -1,10 +1,11 @@
+import { Organization } from './../entity/Organization';
 import {Arg, Ctx, Int, Mutation, Query, Resolver, UseMiddleware} from "type-graphql";
 import {compare, hash} from "bcryptjs";
 import { User } from "../entity/User";
 import { AppContext } from "../AppContext";
 import { createAccessToken, createRefreshToken, sendRefreshToken } from "../helpers/auth";
 import { isAuth } from "../middleware/authMiddleware";
-import { getConnection } from "typeorm";
+import { getConnection, BaseEntity, getRepository } from "typeorm";
 import { LoginResponse } from "../objectTypes/LoginResponse";
 
 @Resolver()
@@ -98,4 +99,26 @@ export class UserResolver {
             return false;
         }
     }
+
+    // Get all users organization
+    @Mutation(() => [Organization])
+    async userOrganizations(
+        @Arg("user_id", () => Int) user_id: BaseEntity
+    ) : Promise<Organization[] | Error> {
+
+        const usersWithOrgs = await getRepository(User)
+            .createQueryBuilder("user")
+            .where({id: user_id})
+            .leftJoinAndSelect("user.organizations", "organization")
+            .getOne();
+            
+        const orgs = await usersWithOrgs?.organizations
+
+        if(orgs) {
+            return orgs
+        } 
+        
+        return Error("No organizations found");
+    }
+
 }

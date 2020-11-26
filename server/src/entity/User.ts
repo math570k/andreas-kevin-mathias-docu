@@ -1,5 +1,6 @@
+import { Organization } from './Organization';
 import { Field, Int, ObjectType } from "type-graphql";
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany } from "typeorm";
 
 @ObjectType()
 @Entity()
@@ -24,4 +25,7 @@ export class User extends BaseEntity {
 
     @Column("int", { default: 0 })
     tokenVersion: number;
+
+    @ManyToMany(() => Organization, organization => organization.administrators)
+    organizations: Organization[];
 }

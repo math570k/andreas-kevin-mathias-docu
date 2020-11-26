@@ -1,4 +1,4 @@
-import { BaseEntity } from 'typeorm';
+import { BaseEntity, getRepository } from 'typeorm';
 import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
 import { Section } from "../entity/Section";
 
@@ -33,13 +33,24 @@ export class SectionResolver {
     
             return true
         }
-    
-        // Read
+        
         @Query(() => [Section])
-        sections() : Promise<Section[]> {
+        async sections(
+            @Arg("page_id", () => Int, { nullable: true }) page_id?: BaseEntity,
+        ) : Promise<Section[]> {
+            if(page_id) {
+              const pages = await getRepository(Section)
+                .createQueryBuilder("section")
+                .where({page: page_id})
+                .getMany()
+                return pages
+            }
+            
             return Section.find();
         }
-        
+
+
+
         // Update
         @Mutation(() => Boolean)
         async updateSection(

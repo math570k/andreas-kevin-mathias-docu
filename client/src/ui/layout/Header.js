@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
-import { useOrganization } from "../../services/providers/OrganizationProviders";
+import { useOrganization } from "../../services/providers/OrganizationProvider";
 
 export default function Header() {
     const [dropdown, setDropdown] = React.useState(false)
@@ -26,7 +26,14 @@ export default function Header() {
                 {/* DROPDOWN */}
                 <CSSTransition in={dropdown} timeout={200} classNames="dropdown" unmountOnExit>
                         <div className={"header__dropdown"}>
-                            <p></p>
+                            <form onSubmit={e => {
+                                e.preventDefault()
+                                createOrg({name, logo})
+                            }}>
+                                <input value={name} type="text" onChange={e => setName(e.target.value)} placeholder="Org name"/>
+                                <input value={logo} type="text" onChange={e => setLogo(e.target.value)} placeholder="Logo"/>
+                                <button type="submit">Submit org</button>
+                            </form>
                         </div>
                 </CSSTransition>
             </div>
@@ -43,15 +50,6 @@ export default function Header() {
                     </a>
                 </div>
             </div>
-
-            <form onSubmit={e => {
-                e.preventDefault()
-                createOrg({name, logo})
-            }}>
-                <input value={name} type="text" onChange={e => setName(e.target.value)}/>
-                <input value={logo} type="text" onChange={e => setLogo(e.target.value)}/>
-                <button type="submit">Submit org</button>
-            </form>
         </div>
     )
 }

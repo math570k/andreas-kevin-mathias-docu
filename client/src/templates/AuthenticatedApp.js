@@ -1,6 +1,7 @@
 import React from "react";
 import {useAuth} from "../services/providers/AuthProvider";
 import {useByeQuery} from "../graphql/test";
+import Header from "../ui/layout/Header";
 
 export default function AuthenticatedApp(props) {
     const {data, error, refetch} = useByeQuery();
@@ -9,6 +10,7 @@ export default function AuthenticatedApp(props) {
 
     return (
         <div>
+            <Header />
             {/*Authenticated App*/}
             <button onClick={() => refetch()}>refetch</button>
             You are currently Authenticated <br/>

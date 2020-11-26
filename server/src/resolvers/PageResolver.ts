@@ -1,4 +1,4 @@
-import { BaseEntity } from 'typeorm';
+import { BaseEntity, getRepository } from 'typeorm';
 import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
 import { Page } from "../entity/Page";
 
@@ -34,7 +34,17 @@ export class PageResolver {
     
         // Read
         @Query(() => [Page])
-        Pages() : Promise<Page[]> {
+        async pages(
+            @Arg("project_id", () => Int, { nullable: true }) project_id?: BaseEntity,
+        ) : Promise<Page[]> {
+            if(project_id) {
+              const pages = await getRepository(Page)
+                .createQueryBuilder("page")
+                .where({project: project_id})
+                .getMany()
+                return pages
+            }
+            
             return Page.find();
         }
         

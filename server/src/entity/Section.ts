@@ -24,5 +24,4 @@ export class Section extends BaseEntity {
 
     @ManyToOne(() => Page, page => page.sections)
     page: Page
-
 }

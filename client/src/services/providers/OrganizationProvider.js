@@ -3,7 +3,7 @@ import { useRegisterOrg } from "../../graphql/organization.js";
 
 const OrganizationContext = React.createContext(null);
 
-function OrganizationProvider() {
+function OrganizationProvider(props) {
     const [handleRegisterOrg] = useRegisterOrg();
     const [state, setState] = React.useState({
         status: 'idle',
@@ -11,11 +11,13 @@ function OrganizationProvider() {
         user: null,
     })
 
-    const createOrg = (form) => {
+    const createOrg = ({name, logo}) => {
+
         handleRegisterOrg({
             variables: {
                 name: name,
                 logo: logo,
+                // Get user id from user context
                 user_id: 5
             }
         })

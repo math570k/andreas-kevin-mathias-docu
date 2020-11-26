@@ -1,6 +1,7 @@
 import { Organization } from './../entity/Organization';
 import { User } from './../entity/User';
 import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
+import { getRepository, BaseEntity } from 'typeorm';
 
 
 @InputType()
@@ -62,5 +63,26 @@ export class OrganizationResolver {
     async deleteOrganization(@Arg("id", () => Int) id: number): Promise<boolean> {
       await Organization.delete({ id });
       return true;
+    }
+
+    // Get all organizations users
+    @Mutation(() => [User])
+    async organizationUsers(
+        @Arg("organization_id", () => Int) organization_id: BaseEntity
+    ) : Promise<User[] | Error> {
+
+        const organization = await getRepository(Organization)
+            .createQueryBuilder("organization")
+            .where({id: organization_id})
+            .leftJoinAndSelect("organization.administrators", "user")
+            .getOne()
+            
+        const admins = await organization?.administrators
+
+        if(admins) {
+            return admins
+        } 
+
+        return Error("No users found");
     }
 }
