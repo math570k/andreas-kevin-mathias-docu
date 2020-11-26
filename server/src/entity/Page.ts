@@ -16,11 +16,11 @@ export class Page extends BaseEntity {
     title: string;
 
     @Field()
-    @Column("text")
+    @Column("text", { nullable: true })
     content: string;
 
     @Field()
-    @Column("int")
+    @Column("int", { nullable: true })
     order: number;
 
     @ManyToOne(() => Project, project => project.pages)
@@ -28,5 +28,4 @@ export class Page extends BaseEntity {
 
     @OneToMany(() => Section, section => section.page)
     sections: Section[];
-
 }

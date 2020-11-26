@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CSSTransition } from "react-transition-group";
+import { useOrganization } from "../../services/providers/OrganizationProviders";
 
-export default function Header(props) {
-    const [dropdown, setDropdown] = useState(false)
+export default function Header() {
+    const [dropdown, setDropdown] = React.useState(false)
+    const [name, setName] = React.useState("");
+    const [logo, setLogo] = React.useState("");
+
+    const { createOrg } = useOrganization()
 
     return (
         <div className="grid grid-cols-12 header">
@@ -38,6 +43,15 @@ export default function Header(props) {
                     </a>
                 </div>
             </div>
+
+            <form onSubmit={e => {
+                e.preventDefault()
+                createOrg({name, logo})
+            }}>
+                <input value={name} type="text" onChange={e => setName(e.target.value)}/>
+                <input value={logo} type="text" onChange={e => setLogo(e.target.value)}/>
+                <button type="submit">Submit org</button>
+            </form>
         </div>
     )
 }

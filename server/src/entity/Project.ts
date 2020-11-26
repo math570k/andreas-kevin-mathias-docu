@@ -28,5 +28,4 @@ export class Project extends BaseEntity {
 
     @OneToMany(() => Page, page => page.project)
     pages: Page[];
-
 }
