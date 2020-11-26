@@ -1,8 +1,10 @@
 import React from "react";
 import {useAuth} from "../services/providers/AuthProvider";
 import {useByeQuery} from "../graphql/test";
-import Header from "./Header";
-import Home from "../pages/Home";
+import Header from "../ui/layout/Header";
+import * as Pages from "../pages";
+import * as Sidebar from "../widgets/sidebars";
+import WithSidebar from "../ui/layout/WithSidebar";
 
 export default function AuthenticatedApp(props) {
     const {data, error, refetch} = useByeQuery();
@@ -13,14 +15,10 @@ export default function AuthenticatedApp(props) {
         <React.Fragment>
             {/*Authenticated App*/}
             <Header/>
-            <main className={'grid grid-cols-12 min-h-full'}>
-                <div className={'col-span-2'}>
-                    sidebar
-                    <button onClick={() => logout()}>logout</button>
-                </div>
-                <div className={'col-span-10'}>
-                    <Home />
-                </div>
+            <main className={'min-h-full relative pt-16'}>
+                <WithSidebar sidebar={<Sidebar.DocumentationOverview/>}>
+                    <Pages.Home/>
+                </WithSidebar>
             </main>
         </React.Fragment>
     )

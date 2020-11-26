@@ -5,9 +5,9 @@ export default function Header(props) {
     const [dropdown, setDropdown] = useState(false)
 
     return (
-        <header className="grid grid-cols-12 header">
-            <div className="col-span-2 bg-black-500 h-16 header__project">
-                <button onClick={() => setDropdown(!dropdown)} className="container px-8 h-16 flex items-center cursor-pointer justify-between">
+        <header className="header fixed w-full flex left-0 top-0 z-40">
+            <div className="w-1/4 bg-black-500 h-16 header__project">
+                <button onClick={() => setDropdown(!dropdown)} className="bg-transparent outline-none border-none px-8 h-16 flex items-center cursor-pointer justify-between space-x-2">
 
                     {/* STATIC */}
                     <h2 className="text-white text-xl">Morningtrain</h2>
@@ -15,7 +15,7 @@ export default function Header(props) {
                     <svg className={"w-4 h-4 header__dropdown-button" + (dropdown ? " is-active" : "")} fill="none" stroke="#8C929D" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
- 
+
                 </button>
 
                 {/* DROPDOWN */}
@@ -25,7 +25,7 @@ export default function Header(props) {
                         </div>
                 </CSSTransition>
             </div>
-            <div className="col-span-10 bg-black-400">
+            <div className="w-full bg-black-400">
                 <div className="container px-8 h-16 flex items-center">
                     {/* STATIC */}
                     <a href="#" className="header__back-button flex items-center cursor-pointer text-xl font-semibold text-gray">
