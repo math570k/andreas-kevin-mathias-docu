@@ -2,6 +2,9 @@ module.exports = {
     purge: [],
     darkMode: false, // or 'media' or 'class'
     theme: {
+        fontFamily: {
+          sans: ['Poppins', 'sans-serif'],
+        },
         extend: {
             colors: {
                 black: {
@@ -18,13 +21,21 @@ module.exports = {
                 },
                 white: "#fff"
             },
+            backgroundColor: {
+                primary: '#FBFCFE'
+            },
+            borderColor: {
+                primary: {
+                    500: '#DDE3E8',
+                }
+            },
+            margin: {
+                '1/5' : '20%',
+            }
         },
     },
     variants: {
         extend: {},
     },
     plugins: [],
-    corePlugins: {
-        preflight: false,
-    }
 }

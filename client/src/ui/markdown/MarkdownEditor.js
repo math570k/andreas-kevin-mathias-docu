@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 
-export default function MarkdownEditor(props) {
-    const [markdown, setMarkdown] = useState(props.markdown);
-
-    const onChange = value => {
-        setMarkdown(value);
-        props.onChange(markdown);
-    }
+export default function MarkdownEditor({markdown}) {
+    const [mrkDwn, setMrkDwn] = useState(markdown)
 
     return (
-        <textarea rows="4" cols="100" value={markdown} onChange={() => onChange(event.target.value)} rows="10"></textarea>
+        <textarea className="w-full" onChange={(e) => setMrkDwn(e.target.value)} value={mrkDwn} rows="10"/>
     )
 }

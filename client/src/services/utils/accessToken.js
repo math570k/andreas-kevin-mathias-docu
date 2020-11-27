@@ -1,7 +1,7 @@
 let accessToken = "";
 
 export const getAccessToken = () => {
-    if(accessToken.length <= 0) return null;
+    if(!accessToken) return "";
     return accessToken;
 }
 
@@ -9,9 +9,16 @@ export const setAccessToken = (token) => {
     return accessToken = token;
 }
 
-export const removeToken = () => {
-    document.cookie = "jid=; expires=Thu, 01 Jan 1970 00:00:00 UTC;"
-    return accessToken = "";
+export function removeToken()  {
+    return new Promise((resolve => {
+        fetch("/remove_refresh_token", {
+            method: "POST",
+            credentials: "include"
+        }).then(() => {
+            accessToken = "";
+            resolve(true);
+        })
+    }))
 }
 
 export function refreshAccessToken() {

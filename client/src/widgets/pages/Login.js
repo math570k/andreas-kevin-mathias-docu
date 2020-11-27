@@ -1,7 +1,6 @@
 import React from "react";
-import {useAuth} from "../services/providers/AuthProvider";
-import Register from "./Register";
-import {useByeQuery} from "../graphql/test";
+import {useAuth} from "../../services/providers/AuthProvider";
+import * as Template from "../../ui/templates";
 
 export default function Login() {
     const [email, setEmail] = React.useState('');
@@ -9,7 +8,7 @@ export default function Login() {
     const {login} = useAuth();
 
     return (
-        <React.Fragment>
+        <Template.Page>
             <div>
                 Login Form
                 <form onSubmit={e => {
@@ -22,7 +21,6 @@ export default function Login() {
                     <button type={'submit'}>Submit</button>
                 </form>
             </div>
-            <Register/>
-        </React.Fragment>
+        </Template.Page>
     );
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {useAuth} from "./services/providers/AuthProvider";
 import AuthenticatedApp from "./templates/AuthenticatedApp";
-// import Header from './ui/layout/Header';
 import UnauthenticatedApp from "./templates/UnauthenticatedApp";
 
 const App = () => {

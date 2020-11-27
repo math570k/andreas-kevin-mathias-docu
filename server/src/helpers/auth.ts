@@ -84,3 +84,14 @@ export const createAccessTokenFromRefreshToken = async (req: Request, res: Respo
 export const sendEmptyTokenResponse = (res: Response): Response => {
     return res.send({ok: false, accessToken: ""});
 }
+
+/**
+ * Remove Refresh Token
+ * @param {Response}
+ * @return {Response}
+ */
+
+export const removeRefreshToken = (_req: Request, res: Response): Response => {
+    res.clearCookie("jid",  {httpOnly: true,});
+    return res.send({ok: true, accessToken: ""});
+}

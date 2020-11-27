@@ -86,11 +86,12 @@ function AuthProvider(props) {
     }
 
     const logout = () => {
-        removeToken();
-        setState({
-            status: 'idle',
-            error: null,
-            user: null,
+        removeToken().then(() => {
+            setState({
+                status: 'resolved',
+                error: null,
+                user: null,
+            })
         })
     }
 
