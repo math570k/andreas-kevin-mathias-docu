@@ -1,1 +1,1 @@
-export {default as DocumentationOverview} from "./DocumentationOveriewSidebar";
+export {default as DocumentationOverview} from "./DocumentationOverviewSidebar";

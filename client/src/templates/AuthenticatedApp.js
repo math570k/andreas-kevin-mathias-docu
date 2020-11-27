@@ -2,11 +2,12 @@ import React from "react";
 import {useAuth} from "../services/providers/AuthProvider";
 import {useByeQuery} from "../graphql/test";
 import Header from "../ui/layout/Header";
-import * as Pages from "../pages";
+import * as Pages from "../widgets/pages";
 import * as Sidebar from "../widgets/sidebars";
 import WithSidebar from "../ui/layout/WithSidebar";
+import AuthenticatedRoutes from "../routes/AuthenticatedRoutes";
 
-export default function AuthenticatedApp(props) {
+export default function AuthenticatedApp({children}) {
     const {data, error, refetch} = useByeQuery();
     console.log(data, error)
     const {logout} = useAuth()
@@ -15,10 +16,9 @@ export default function AuthenticatedApp(props) {
         <React.Fragment>
             {/*Authenticated App*/}
             <Header/>
+
             <main className={'min-h-full relative pt-16'}>
-                <WithSidebar sidebar={<Sidebar.DocumentationOverview/>}>
-                    <Pages.Home/>
-                </WithSidebar>
+                <AuthenticatedRoutes/>
             </main>
         </React.Fragment>
     )

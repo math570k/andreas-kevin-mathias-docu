@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import {useAuth} from "../../services/providers/AuthProvider";
 
 export default function Header(props) {
     const [dropdown, setDropdown] = useState(false)
+    const {logout} = useAuth();
 
     return (
         <header className="header fixed w-full flex left-0 top-0 z-40">
@@ -36,6 +38,7 @@ export default function Header(props) {
                             Wordpress Template Theme
                         </span>
                     </a>
+                    <button className={'text-white border border-green-500'} onClick={() => logout()}>logout</button>
                 </div>
             </div>
         </header>
