@@ -14,9 +14,7 @@ export default function AuthenticatedApp({children}) {
 
     return (
         <React.Fragment>
-            {/*Authenticated App*/}
             <Header/>
-
             <main className={'min-h-full relative pt-16'}>
                 <AuthenticatedRoutes/>
             </main>
