@@ -34,7 +34,7 @@ export default function Header(props) {
                         <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#8C929D">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        <span className="pl-4">
+                        <span className="pl-4 text-gray-500">
                             Wordpress Template Theme
                         </span>
                     </a>
