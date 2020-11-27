@@ -1,9 +1,9 @@
 import React from "react";
-import Register from "../widgets/pages/Register";
-import Login from "../widgets/pages/Login";
-import {useByeQuery} from "../graphql/test";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
+import {useByeQuery} from "../../graphql/test";
 import {Route, Link, Switch} from "react-router-dom";
-import UnauthenticatedRoutes from "../routes/UnauthenticatedRoutes";
+import UnauthenticatedRoutes from "../../routes/UnauthenticatedRoutes";
 
 export default function UnauthenticatedApp(props) {
     return (

@@ -1,6 +1,6 @@
 import React from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
-import AuthenticatedApp from "../templates/AuthenticatedApp";
+import AuthenticatedApp from "../widgets/apps/AuthenticatedApp";
 import * as Page from "../widgets/pages";
 import WithSidebar from "../ui/layout/WithSidebar";
 import * as Sidebar from "../widgets/sidebars";
