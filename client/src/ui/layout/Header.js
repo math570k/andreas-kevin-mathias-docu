@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import {useAuth} from "../../services/providers/AuthProvider";
+import { useOrganization } from "../../services/providers/OrganizationProvider";
 
 export default function Header(props) {
-    const [dropdown, setDropdown] = useState(false)
     const {logout} = useAuth();
+    const [ dropdown, setDropdown ] = React.useState(false)
+    const [ name, setName ] = React.useState("");
+    const [ logo, setLogo ] = React.useState("");
+
+    const {orgData} = useOrganization()
 
     return (
         <header className="header fixed w-full flex left-0 top-0 z-40">
@@ -19,6 +24,8 @@ export default function Header(props) {
                     </svg>
 
                 </button>
+
+                <h1>{orgData && orgData.organization[0].name}</h1>
 
                 {/* DROPDOWN */}
                 <CSSTransition in={dropdown} timeout={200} classNames="dropdown" unmountOnExit>
@@ -40,6 +47,9 @@ export default function Header(props) {
                     </a>
                     <button className={'text-white border border-green-500'} onClick={() => logout()}>logout</button>
                 </div>
+            </div>
+            <div>
+
             </div>
         </header>
     )

@@ -1,3 +1,4 @@
+import { Project } from './../entity/Project';
 import { Organization } from './../entity/Organization';
 import { User } from './../entity/User';
 import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
@@ -44,8 +45,22 @@ export class OrganizationResolver {
 
     // Read
     @Query(() => [Organization])
-    Organizations() : Promise<Organization[]> {
-        return Organization.find();
+    async organization(
+        @Arg("organization_id", () => Int, {nullable: true}) id? : number
+    ) : Promise<Organization[] | Organization | Project[]> {
+        if(id) {
+            const organization = await getRepository(Organization)
+                .createQueryBuilder("organization")
+                .where({id: id})
+                .leftJoinAndSelect("organization.projects", "projects")
+                .leftJoinAndSelect("projects.pages", "pages")
+                .leftJoinAndSelect("pages.sections", "sections")
+                .getMany()
+
+            return organization;
+        } else {
+            return Organization.find();
+        }
     }
     
     // Update
