@@ -52,7 +52,8 @@ export class ProjectResolver {
             .createQueryBuilder("section")
             .where({organization: organization_id})
             .getMany()
-            return projects
+            
+          return projects
         }
         
         return Project.find();

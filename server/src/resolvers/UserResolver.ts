@@ -101,7 +101,7 @@ export class UserResolver {
     }
 
     // Get all users organization
-    @Mutation(() => [Organization])
+    @Query(() => [Organization])
     async userOrganizations(
         @Arg("user_id", () => Int) user_id: BaseEntity
     ) : Promise<Organization[] | Error> {
@@ -109,11 +109,13 @@ export class UserResolver {
         const usersWithOrgs = await getRepository(User)
             .createQueryBuilder("user")
             .where({id: user_id})
-            .leftJoinAndSelect("user.organizations", "organization")
+            .leftJoinAndSelect("user.organizations", "organizations")
+            .leftJoinAndSelect("organizations.projects", "projects")
+            .leftJoinAndSelect("projects.pages", "pages")
+            .leftJoinAndSelect("pages.sections", "sections")
             .getOne();
             
-        const orgs = await usersWithOrgs?.organizations
-
+            const orgs = await usersWithOrgs?.organizations
         if(orgs) {
             return orgs
         } 
