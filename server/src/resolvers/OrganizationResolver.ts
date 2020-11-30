@@ -81,7 +81,7 @@ export class OrganizationResolver {
     }
 
     // Get all organizations users
-    @Mutation(() => [User])
+    @Query(() => [User])
     async organizationUsers(
         @Arg("organization_id", () => Int) organization_id: BaseEntity
     ) : Promise<User[] | Error> {
