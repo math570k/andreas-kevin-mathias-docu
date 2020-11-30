@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import marked, { Renderer } from "marked";
 import hljs from "highlight.js";
 import DOMPurify from "dompurify";
+import {useMarkdown} from "../../services/providers/MarkdownProvider";
 
 const renderer = new Renderer();
 
@@ -26,12 +27,13 @@ marked.setOptions({
 
 export default function MarkdownRender(props) {
     const [clean, setClean] = useState();
+    const {editedMarkdown} = useMarkdown();
 
     useEffect(() => {
-        setClean(DOMPurify.sanitize(marked(props.markdown)));
-    }, [props.markdown]);
+        setClean(DOMPurify.sanitize(marked(editedMarkdown)));
+    }, [editedMarkdown]);
 
     return (
-        <div className="markdown-render" dangerouslySetInnerHTML={{__html: clean}}></div>
+        <div className="markdown-render prose max-w-none" dangerouslySetInnerHTML={{__html: clean}}></div>
     )
 }
