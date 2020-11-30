@@ -26,6 +26,7 @@ export class Project extends BaseEntity {
     @ManyToOne(() => Organization, organization => organization.projects)
     organization: Organization
 
+    @Field(() => [Page], {nullable: true})
     @OneToMany(() => Page, page => page.project)
     pages: Page[];
 }

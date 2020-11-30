@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import {useAuth} from "../../services/providers/AuthProvider";
+import { useOrganization } from "../../services/providers/OrganizationProvider";
 
 export default function Header(props) {
-    const [dropdown, setDropdown] = useState(false)
     const {logout} = useAuth();
+    const [ dropdown, setDropdown ] = React.useState(false)
+    const [ name, setName ] = React.useState("");
+    const [ logo, setLogo ] = React.useState("");
+
+    const {orgData} = useOrganization()
 
     return (
         <header className="header fixed w-full flex left-0 top-0 z-40">
@@ -20,6 +25,8 @@ export default function Header(props) {
 
                 </button>
 
+                <h1>{orgData && orgData.organization[0].name}</h1>
+
                 {/* DROPDOWN */}
                 <CSSTransition in={dropdown} timeout={200} classNames="dropdown" unmountOnExit>
                         <div className={"header__dropdown"}>
@@ -34,12 +41,15 @@ export default function Header(props) {
                         <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#8C929D">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        <span className="pl-4">
+                        <span className="pl-4 text-gray-500">
                             Wordpress Template Theme
                         </span>
                     </a>
                     <button className={'text-white border border-green-500'} onClick={() => logout()}>logout</button>
                 </div>
+            </div>
+            <div>
+
             </div>
         </header>
     )

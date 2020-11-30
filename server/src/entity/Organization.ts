@@ -18,6 +18,7 @@ export class Organization extends BaseEntity {
     @Column("text")
     logo: string;
 
+    @Field(() => [Project], { nullable: true })
     @OneToMany(() => Project, project => project.organization)
     projects: Project[];
 

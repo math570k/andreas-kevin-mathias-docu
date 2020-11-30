@@ -1,8 +1,12 @@
 import React from "react";
+import classNames from "classnames";
 
-export default function Page({children}) {
+export default function Page({children, backgroundColor, className}) {
+
+    const pageClassNames = classNames('content mx-auto min-w-page px-12',className, backgroundColor)
+
     return (
-        <div className={'content mx-auto px-12'}>
+        <div className={pageClassNames}>
             {children}
         </div>
     )

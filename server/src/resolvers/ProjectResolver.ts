@@ -1,4 +1,4 @@
-import { BaseEntity } from 'typeorm';
+import { BaseEntity, getRepository } from 'typeorm';
 import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
 import { Project } from "../entity/Project";
 
@@ -34,12 +34,6 @@ export class ProjectResolver {
         return true
     }
 
-    // Read all
-    @Query(() => [Project])
-    projects() : Promise<Project[]> {
-        return Project.find(Project)
-    }
-
     // Read single
     @Query(() => Project)
     project(
@@ -47,6 +41,23 @@ export class ProjectResolver {
     ) : Promise<Project | undefined> {
         return Project.findOne(id);
     }
+
+
+    @Query(() => [Project])
+    async projects (
+        @Arg("organization_id", () => Int, { nullable: true }) organization_id?: BaseEntity,
+    ) : Promise<Project[]> {
+        if(organization_id) {
+          const projects = await getRepository(Project)
+            .createQueryBuilder("section")
+            .where({organization: organization_id})
+            .getMany()
+            return projects
+        }
+        
+        return Project.find();
+    }
+
 
     
     // Update

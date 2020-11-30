@@ -36,12 +36,12 @@ export class PageResolver {
         @Query(() => [Page])
         async pages(
             @Arg("project_id", () => Int, { nullable: true }) project_id?: BaseEntity,
-        ) : Promise<Page[]> {
+        ) : Promise<Page[] | Page | undefined> {
             if(project_id) {
               const pages = await getRepository(Page)
                 .createQueryBuilder("page")
                 .where({project: project_id})
-                .getMany()
+                .getOne()
                 return pages
             }
             
