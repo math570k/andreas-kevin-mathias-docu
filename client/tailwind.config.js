@@ -31,11 +31,16 @@ module.exports = {
             },
             margin: {
                 '1/5' : '20%',
+            },
+            maxWidth: {
+                '90ch': '90ch'
             }
         },
     },
     variants: {
         extend: {},
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/typography'),
+    ],
 }
