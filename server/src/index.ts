@@ -12,6 +12,8 @@ import { createConnection } from "typeorm";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import { createAccessTokenFromRefreshToken, removeRefreshToken } from "./helpers/auth";
+import { Mongo } from './mongo';
+import { DraftResolver } from './resolvers/DraftResolver';
 
 const PORT = 8000;
 
@@ -36,6 +38,12 @@ const PORT = 8000;
     */
     app.post("/remove_refresh_token", removeRefreshToken);
 
+    try {
+        await Mongo.connect(`mongodb://root:supersecret@mongodb:27017`);
+    } catch (err) {
+        console.error(`Unable to connect to Mongo!`, err);
+    }
+
     /*
      * Create database connection
      * Connection info defined in ormconfig.json
@@ -52,7 +60,8 @@ const PORT = 8000;
                 OrganizationResolver, 
                 PageResolver, 
                 ProjectResolver, 
-                SectionResolver
+                SectionResolver,
+                DraftResolver
             ],
             validate: false
         }),

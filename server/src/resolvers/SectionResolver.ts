@@ -1,18 +1,7 @@
 import { BaseEntity, getRepository } from 'typeorm';
-import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
+import { Arg, Mutation, Resolver, Query, Int } from "type-graphql";
 import { Section } from "../entity/Section";
-
-@InputType()
-class ISectionType {
-    @Field()
-    title: string
-
-    @Field(() => String, { nullable: true })
-    content: string
-
-    @Field(() => Int, { nullable: true })
-    order: number
-}
+import { ISectionType } from "../inputTypes/ISectionType";
 
 @Resolver()
 export class SectionResolver {
