@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
-import {useAuth} from "../../services/providers/AuthProvider";
-import { useOrganization } from "../../services/providers/OrganizationProvider";
+import { useGetOrganization } from "../../../graphql/organization";
+import { useAuth } from "../../../services/providers/AuthProvider";
+import { useGetUserOrgs, useOrganization } from "../../../services/providers/OrganizationProvider";
+import Dropdown from "./Dropdown";
 
 export default function Header(props) {
-    const {logout} = useAuth();
+    const { logout } = useAuth();
     const [ dropdown, setDropdown ] = React.useState(false)
-    const [ name, setName ] = React.useState("");
-    const [ logo, setLogo ] = React.useState("");
-
-    const {orgData} = useOrganization()
+    const { organization, setOrganization } = useOrganization();
 
     return (
         <header className="header fixed w-full flex left-0 top-0 z-40">
             <div className="w-1/4 bg-black-500 h-16 header__project">
                 <button onClick={() => setDropdown(!dropdown)} className="bg-transparent outline-none border-none px-8 h-16 flex items-center cursor-pointer justify-between space-x-2">
-
-                    {/* STATIC */}
-                    <h2 className="text-white text-xl">Morningtrain</h2>
-
+                    <h2 className="text-white text-xl">{organization && organization.name}</h2>
                     <svg className={"w-4 h-4 header__dropdown-button" + (dropdown ? " is-active" : "")} fill="none" stroke="#8C929D" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
-
                 </button>
-
-                <h1>{orgData && orgData.organization[0].name}</h1>
 
                 {/* DROPDOWN */}
                 <CSSTransition in={dropdown} timeout={200} classNames="dropdown" unmountOnExit>
-                        <div className={"header__dropdown"}>
-                            <p></p>
-                        </div>
+                    <Dropdown isActive={dropdown} />
                 </CSSTransition>
             </div>
             <div className="w-full bg-black-400">
@@ -48,9 +39,7 @@ export default function Header(props) {
                     <button className={'text-white border border-green-500'} onClick={() => logout()}>logout</button>
                 </div>
             </div>
-            <div>
-
-            </div>
         </header>
     )
+
 }
