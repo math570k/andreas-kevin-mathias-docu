@@ -1,7 +1,8 @@
-import { BaseEntity, getRepository } from 'typeorm';
+import { BaseEntity } from 'typeorm';
 import { Arg, Mutation, Resolver, Query, Int } from "type-graphql";
 import { Section } from "../entity/Section";
 import { ISectionType } from "../inputTypes/ISectionType";
+import { SectionController } from "../controllers/SectionController";
 
 @Resolver()
 export class SectionResolver {
@@ -12,14 +13,7 @@ export class SectionResolver {
             @Arg("page_id", () => Int) page_id: BaseEntity,
             @Arg("section", () => ISectionType) section : ISectionType
         ) : Promise<boolean | Error>{
-    
-            await Section.create({...section, page: page_id}).save().catch((err: any) => {
-                switch (err.code) {
-                  case 'ER_DUP_ENTRY':
-                    return Error("Something went wrong")
-                } return;
-            })
-    
+            await SectionController.addSection(page_id, section);
             return true
         }
         
@@ -27,18 +21,12 @@ export class SectionResolver {
         async sections(
             @Arg("page_id", () => Int, { nullable: true }) page_id?: BaseEntity,
         ) : Promise<Section[]> {
-            if(page_id) {
-              const pages = await getRepository(Section)
-                .createQueryBuilder("section")
-                .where({page: page_id})
-                .getMany()
-                return pages
+            if (page_id) {
+                return SectionController.getSection(page_id);
             }
-            
-            return Section.find();
+
+            return SectionController.getSection();
         }
-
-
 
         // Update
         @Mutation(() => Boolean)
@@ -46,14 +34,14 @@ export class SectionResolver {
             @Arg("id", () => Int) id: number,
             @Arg("description", () => ISectionType) description: ISectionType
         ) : Promise<boolean> {
-            await Section.update({ id }, description);
-            return true
+            await SectionController.editSection(id, description);
+            return true;
         }
     
         // Delete
         @Mutation(() => Boolean)
         async deleteSection(@Arg("id", () => Int) id: number): Promise<boolean> {
-          await Section.delete({ id });
-          return true;
+            await SectionController.removeSection(id);
+            return true;
         }
 }

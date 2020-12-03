@@ -11,7 +11,7 @@ export class IDraft {
     action: string
 
     @Field(() => GraphQLJSON, { nullable: true })
-    content: any;
+    content: any
 
     @Field({ nullable: true })
     userId: number

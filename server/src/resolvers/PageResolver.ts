@@ -1,18 +1,8 @@
-import { BaseEntity, getRepository } from 'typeorm';
-import { Arg, Mutation, Resolver, Query, InputType, Field, Int } from "type-graphql";
+import { BaseEntity } from 'typeorm';
+import { Arg, Mutation, Resolver, Query, Int } from "type-graphql";
 import { Page } from "../entity/Page";
-
-@InputType()
-class IPageType {
-    @Field()
-    title: string
-
-    @Field(() => String, { nullable: true })
-    content: string
-
-    @Field(() => Int, { nullable: true })
-    order: number
-}
+import { IPageType } from '../inputTypes/IPageType';
+import { PageController } from '../controllers/PageController';
 
 @Resolver()
 export class PageResolver {
@@ -23,12 +13,7 @@ export class PageResolver {
             @Arg("project_id", () => Int) project_id : BaseEntity,
             @Arg("page", () => IPageType) page : IPageType
         ) : Promise<boolean> {
-            await Page.create({...page, project: project_id}).save().catch((err: any) => {
-                switch (err.code) {
-                  case 'ER_DUP_ENTRY':
-                    return Error("Something went wrong")
-                } return;
-            })
+            await PageController.addPage(project_id, page);
             return true
         }
     
@@ -37,15 +22,11 @@ export class PageResolver {
         async pages(
             @Arg("project_id", () => Int, { nullable: true }) project_id?: BaseEntity,
         ) : Promise<Page[] | Page | undefined> {
-            if(project_id) {
-              const pages = await getRepository(Page)
-                .createQueryBuilder("page")
-                .where({project: project_id})
-                .getOne()
-                return pages
+            if (project_id) {
+                return await PageController.getPages(project_id);
             }
-            
-            return Page.find();
+
+            return await PageController.getPages();
         }
         
         // Update
@@ -54,14 +35,14 @@ export class PageResolver {
             @Arg("id", () => Int) id: number,
             @Arg("description", () => IPageType) description: IPageType
         ) : Promise<boolean> {
-            await Page.update({ id }, description);
+            await PageController.editPage(id, description);
             return true
         }
     
         // Delete
         @Mutation(() => Boolean)
         async deletePage(@Arg("id", () => Int) id: number): Promise<boolean> {
-          await Page.delete({ id });
+          await PageController.removePage(id);
           return true;
         }
 }
