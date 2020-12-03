@@ -11,7 +11,7 @@ export default function Section({children, markdown}) {
     const { open, openModal, closeModal } = useModal();
 
     return (
-        <div className={"relative mb-12"}>
+        <section className={"relative"}>
            <button onClick={() => openModal()} className={"absolute z-20 top-2 right-0 bg-transparent border-0 cursor-pointer block text-gray-500 focus:outline-none"}><PencilAlt size={20} /></button>
             {open ? (
                 <Modal
@@ -40,6 +40,6 @@ export default function Section({children, markdown}) {
                 </Modal>
             ) : null}
             {children}
-        </div>
+        </section>
     )
 }

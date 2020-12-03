@@ -33,10 +33,11 @@ module.exports = {
                 '1/5' : '20%',
             },
             minWidth: {
-                page: '1600px',
+                'page': '1600px',
             },
             maxWidth: {
-                '90ch': '90ch'
+                '90ch': '90ch',
+                'page': '1600px',
             }
         },
     },

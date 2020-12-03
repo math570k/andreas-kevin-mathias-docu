@@ -1,21 +1,34 @@
-import { useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { GET_ORGANIZATION, useGetOrganization, useGetOrgUsers, useGetPages, useGetProjects, useGetSections, useGetUserOrgs, useRegisterOrg } from "../../graphql/organization.js";
+import jwtDecode from "jwt-decode";
+import {getAccessToken} from "../utils/accessToken";
 
 const OrganizationContext = React.createContext(null);
 
 function OrganizationProvider(props) {
-    // const [ handleUserOrgs ] = useGetUserOrgs();
-    const [ organization, setOrganization ] = React.useState();
+
+    const {userId} = jwtDecode(getAccessToken());
+
+    const { data, error, loading } = useGetUserOrgs(userId);
+    const [ organizations, setOrganizations ] = React.useState();
+    const [ activeOrganization, setActiveOrganization ] = React.useState();
     const [ activeProject, setActiveProject ] = React.useState();
 
-    const [state, setState] = React.useState({
+/*    const [state, setState] = React.useState({
         status: 'idle',
         error: null,
         user: null,
     })
+*/
 
-    const createOrg = ({name, logo}) => {
+    React.useEffect(() => {
+        if(data) {
+            setOrganizations(data.userOrganizations);
+            setActiveOrganization(data.userOrganizations[0]);
+        }
+    }, [data])
+
+/*    const createOrg = ({name, logo}) => {
         handleRegisterOrg({
             variables: {
                 name: name,
@@ -32,21 +45,28 @@ function OrganizationProvider(props) {
                     user: null,
                 })
             })
-    }
+    }*/
 
-    const getOrg = async (id) => {
+
+
+/*    const getOrg = async (id) => {
         const { data, error, loading } = await useGetOrganization();
         if(data) {
             setOrganization(data)
         }
+    }*/
+
+    if(error || loading) {
+        return <div>Loading...</div>
     }
 
     const OrganizationAPI = {
-        createOrg,
-        getOrg,
-        setOrganization,
-        organization,
-        setOrganization,
+        // createOrg,
+        // getOrg,
+        setOrganizations,
+        organizations,
+        setActiveOrganization,
+        activeOrganization,
         activeProject,
         setActiveProject
     }

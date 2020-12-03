@@ -8,13 +8,13 @@ import Dropdown from "./Dropdown";
 export default function Header(props) {
     const { logout } = useAuth();
     const [ dropdown, setDropdown ] = React.useState(false)
-    const { organization, setOrganization } = useOrganization();
+    const { activeOrganization } = useOrganization();
 
     return (
         <header className="header fixed w-full flex left-0 top-0 z-40">
             <div className="w-1/4 bg-black-500 h-16 header__project">
                 <button onClick={() => setDropdown(!dropdown)} className="bg-transparent outline-none border-none px-8 h-16 flex items-center cursor-pointer justify-between space-x-2">
-                    <h2 className="text-white text-xl">{organization && organization.name}</h2>
+                    <h2 className="text-white text-xl">{activeOrganization && activeOrganization.name}</h2>
                     <svg className={"w-4 h-4 header__dropdown-button" + (dropdown ? " is-active" : "")} fill="none" stroke="#8C929D" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
@@ -22,7 +22,7 @@ export default function Header(props) {
 
                 {/* DROPDOWN */}
                 <CSSTransition in={dropdown} timeout={200} classNames="dropdown" unmountOnExit>
-                    <Dropdown isActive={dropdown} />
+                    <Dropdown/>
                 </CSSTransition>
             </div>
             <div className="w-full bg-black-400">
