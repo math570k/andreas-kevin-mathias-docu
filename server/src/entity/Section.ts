@@ -22,6 +22,9 @@ export class Section extends BaseEntity {
     @Column("int")
     order: number;
 
+    @Field({ nullable: true })
+    html: string;
+
     @ManyToOne(() => Page, page => page.sections)
     page: Page
 }
