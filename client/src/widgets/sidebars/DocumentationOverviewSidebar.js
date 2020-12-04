@@ -33,7 +33,7 @@ export default function DocumentationOverview() {
                 : <h3 className="p-8">No projects yet</h3>}
             </ul>
             <div className="p-8">
-                <button className={"bg-black-400 w-full rounded font-bold py-2 px-4 text-white"}>Create project +</button>
+                <button className={"button-blue"}>Create project +</button>
             </div>
         </Sidebar>
     )

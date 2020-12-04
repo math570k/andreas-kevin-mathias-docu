@@ -2,6 +2,10 @@
     @apply bg-purple-600 rounded font-bold py-2 px-4 text-white;
 }
 
-.button--blue {
-    @apply bg-black-400 rounded font-bold py-2 px-4 text-white;
+.button-blue {
+    @apply bg-black-400 w-full rounded font-bold py-2 px-4 text-white transition;
+}
+
+.button-blue:hover {
+    @apply bg-black-500;
 }

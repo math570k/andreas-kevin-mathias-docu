@@ -3,6 +3,7 @@ import { useOrganization } from "../../services/providers/OrganizationProvider";
 import * as Template from "../../ui/templates";
 import SectionTitle from "../../ui/section/SectionTitle";
 import Section from "../../ui/section/Section";
+import ProjectOverview from "../../ui/projectOverview/ProjectOverview";
 
 export default function Home() {
     const { activeProject } = useOrganization();
@@ -12,8 +13,9 @@ export default function Home() {
 
     return (
         <Template.Page>
+            {activeProject ? 
             <Template.DocumentationContent>
-                <Section markdown={mockMarkdown}>
+                    <Section markdown={mockMarkdown}>
                     <SectionTitle>Phasellus vestibulum</SectionTitle>
                     <p>Suspendisse ac mi dui. Etiam pretium sodales urna, iaculis consequat ipsum suscipit nec.
                         Suspendisse iaculis est a ornare semper. Aliquam erat volutpat. Aliquam laoreet congue
@@ -22,11 +24,11 @@ export default function Home() {
                         augue. Praesent consequat finibus neque, et pellentesque nibh ullamcorper sed.</p>
                     <pre><code className="hljs hljs-javascript">
                     {`function myFunction() { 
-// Declare a function document.getElementById("demo").innerHTML = "Hello World!";
-}
-
-// Call the function
-myFunction(); 
+                        // Declare a function document.getElementById("demo").innerHTML = "Hello World!";
+                    }
+                    
+                    // Call the function
+                    myFunction(); 
                     `}
                     </code></pre>
                 </Section>
@@ -46,6 +48,7 @@ myFunction(); // Call the function`}
                     </code></pre>
                 </Section>
             </Template.DocumentationContent>
+            : <ProjectOverview />}
         </Template.Page>
     );
 }

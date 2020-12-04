@@ -24,7 +24,7 @@ export default function Header() {
                 </CSSTransition>
             </div>
             <div className="w-full bg-black-400">
-                <div className="container px-8 h-16 flex items-center justify-between">
+                <div className="container px-12 h-16 flex items-center justify-between">
                     <a href="#" className="header__back-button flex items-center cursor-pointer text-xl font-semibold text-gray">
                         <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#8C929D">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

@@ -1,3 +1,4 @@
+import { Tag } from './Tag';
 import { Field, Int, ObjectType } from "type-graphql";
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, OneToMany} from "typeorm";
 import { Organization } from "./Organization";
@@ -21,7 +22,15 @@ export class Project extends BaseEntity {
 
     @Field()
     @Column("text")
+    description: string;
+    
+    @Field()
+    @Column("text")
     content: string;
+
+    @Field(() => [Tag])
+    @OneToMany(() => Tag, tag => tag.project, {nullable: true})
+    tags: Tag[]
     
     @ManyToOne(() => Organization, organization => organization.projects)
     organization: Organization
