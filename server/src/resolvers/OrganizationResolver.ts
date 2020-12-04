@@ -54,6 +54,7 @@ export class OrganizationResolver {
                 .where({id: id})
                 .leftJoinAndSelect("organization.projects", "projects")
                 .leftJoinAndSelect("projects.pages", "pages")
+                .leftJoinAndSelect("projects.tags", "tags")
                 .leftJoinAndSelect("pages.sections", "sections")
                 .getMany()
 

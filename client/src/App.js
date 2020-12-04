@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { useGetOrganization } from './graphql/organization';
+import React from 'react';
 import {useAuth} from "./services/providers/AuthProvider";
-import { useOrganization } from './services/providers/OrganizationProvider';
 import AuthenticatedApp from "./widgets/apps/AuthenticatedApp";
 import UnauthenticatedApp from "./widgets/apps/UnauthenticatedApp";
 

@@ -8,6 +8,7 @@ import { buildSchema } from "type-graphql";
 import {UserResolver} from "./resolvers/UserResolver";
 import { PageResolver } from './resolvers/PageResolver';
 import { OrganizationResolver } from './resolvers/OrganizationResolver';
+import { TagResolver } from './resolvers/TagResolver';
 import { createConnection } from "typeorm";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
@@ -61,7 +62,8 @@ const PORT = 8000;
                 PageResolver, 
                 ProjectResolver, 
                 SectionResolver,
-                DraftResolver
+                DraftResolver,
+                TagResolver
             ],
             validate: false
         }),

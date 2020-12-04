@@ -1,0 +1,24 @@
+.pages {
+    position: relative;
+    padding-left: calc(2rem);
+}
+
+.pages:before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: #C8CCD1;
+    left: calc(-8px + 1rem);
+    top: -11.5px;
+}
+
+.pages-item-title:before {
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 10px;
+    left: -23px;
+    top: 50%;
+    background-color: #C8CCD1;
+}

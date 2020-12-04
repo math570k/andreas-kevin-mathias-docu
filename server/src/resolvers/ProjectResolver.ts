@@ -11,6 +11,9 @@ class IProjectType {
     title: string
 
     @Field()
+    description: string
+
+    @Field()
     content: string
 }
 
