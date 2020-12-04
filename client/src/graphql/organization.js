@@ -19,6 +19,11 @@ const GET_USER_ORGS = gql`
         id
         title
         content
+        color
+        tags {
+          id
+          title
+        }
         pages {
           id
           content
@@ -76,7 +81,7 @@ export function useRegisterOrg() {
   return useMutation(REGISTER_ORG);
 }
 
-export function useGetUserOrgs(id = 1) {
+export function useGetUserOrgs(id) {
   console.log("ran?")
   return useQuery(GET_USER_ORGS, {
     variables: {

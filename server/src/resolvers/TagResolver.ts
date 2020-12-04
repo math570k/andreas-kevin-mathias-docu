@@ -9,12 +9,12 @@ class ITagType {
 }
 
 @Resolver()
-export class ProjectResolver {
+export class TagResolver {
 
     // Create
     @Mutation(() => Boolean)
     async createTag(
-        @Arg("org_id", () => Int) project_id: BaseEntity,
+        @Arg("project_id", () => Int) project_id: BaseEntity,
         @Arg("tag", () => ITagType) tag : ITagType
     ) : Promise<boolean | Error>{
 
@@ -39,11 +39,11 @@ export class ProjectResolver {
 
     @Query(() => [Tag])
     async tags (
-        @Arg("organization_id", () => Int, { nullable: true }) project_id?: BaseEntity,
+        @Arg("project_id", () => Int, { nullable: true }) project_id?: BaseEntity,
     ) : Promise<Tag[]> {
         if(project_id) {
           const tags = await getRepository(Tag)
-            .createQueryBuilder("section")
+            .createQueryBuilder("tag")
             .where({project: project_id})
             .getMany()
             

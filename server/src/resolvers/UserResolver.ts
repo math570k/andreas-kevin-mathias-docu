@@ -112,6 +112,7 @@ export class UserResolver {
             .leftJoinAndSelect("user.organizations", "organizations")
             .leftJoinAndSelect("organizations.projects", "projects")
             .leftJoinAndSelect("projects.pages", "pages")
+            .leftJoinAndSelect("projects.tags", "tags")
             .leftJoinAndSelect("pages.sections", "sections")
             .getOne();
             

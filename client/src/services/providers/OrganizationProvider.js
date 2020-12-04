@@ -7,9 +7,9 @@ const OrganizationContext = React.createContext(null);
 
 function OrganizationProvider(props) {
 
-    const {userId} = jwtDecode(getAccessToken());
+    const { userId } = jwtDecode(getAccessToken());
 
-    const { data, error, loading } = useGetUserOrgs(1);
+    const { data, error, loading } = useGetUserOrgs(userId);
     const [ organizations, setOrganizations ] = React.useState();
     const [ activeOrganization, setActiveOrganization ] = React.useState();
     const [ activeProject, setActiveProject ] = React.useState();

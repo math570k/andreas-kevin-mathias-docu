@@ -10,7 +10,7 @@ export default function ProjectOverview(props) {
     // Check på om der er projekter eller ej
 
     return (
-        <div className="container py-8 flex">
+        <div className="container py-8 flex flex-wrap">
             {activeOrganization && activeOrganization.projects.map((project) => {
                 return <ProjectCard project={project} key={project.id} />
             })}
