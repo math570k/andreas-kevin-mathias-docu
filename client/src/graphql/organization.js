@@ -77,6 +77,7 @@ export function useRegisterOrg() {
 }
 
 export function useGetUserOrgs(id = 1) {
+  console.log("ran?")
   return useQuery(GET_USER_ORGS, {
     variables: {
       user_id: id,

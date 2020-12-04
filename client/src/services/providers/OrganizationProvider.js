@@ -1,52 +1,36 @@
-import { useQuery } from "@apollo/client";
-import React, { useEffect } from "react";
-import { GET_ORGANIZATION, useGetOrganization, useGetOrgUsers, useGetPages, useGetProjects, useGetSections, useGetUserOrgs, useRegisterOrg } from "../../graphql/organization.js";
+import React from "react";
+import { useGetUserOrgs} from "../../graphql/organization.js";
+import jwtDecode from "jwt-decode";
+import {getAccessToken} from "../utils/accessToken";
 
 const OrganizationContext = React.createContext(null);
 
 function OrganizationProvider(props) {
-    // const [ handleUserOrgs ] = useGetUserOrgs();
-    const [ organization, setOrganization ] = React.useState();
+
+    const {userId} = jwtDecode(getAccessToken());
+
+    const { data, error, loading } = useGetUserOrgs(1);
+    const [ organizations, setOrganizations ] = React.useState();
+    const [ activeOrganization, setActiveOrganization ] = React.useState();
     const [ activeProject, setActiveProject ] = React.useState();
 
-    const [state, setState] = React.useState({
-        status: 'idle',
-        error: null,
-        user: null,
-    })
-
-    const createOrg = ({name, logo}) => {
-        handleRegisterOrg({
-            variables: {
-                name: name,
-                logo: logo,
-                // Get user id from user context
-                user_id: user_id
-            }
-        })
-            .then(res => console.log(res))
-            .catch(error => {
-                setState({
-                    status: 'rejected',
-                    error: error,
-                    user: null,
-                })
-            })
-    }
-
-    const getOrg = async (id) => {
-        const { data, error, loading } = await useGetOrganization();
+    React.useEffect(() => {
         if(data) {
-            setOrganization(data)
+            setOrganizations(data.userOrganizations);
+            setActiveOrganization(data.userOrganizations[0]);
         }
+    }, [data])
+
+
+    if(error || loading) {
+        return <div>Loading...</div>
     }
 
     const OrganizationAPI = {
-        createOrg,
-        getOrg,
-        setOrganization,
-        organization,
-        setOrganization,
+        setOrganizations,
+        organizations,
+        setActiveOrganization,
+        activeOrganization,
         activeProject,
         setActiveProject
     }
