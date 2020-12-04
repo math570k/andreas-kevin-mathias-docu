@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import {useAuth} from "../../services/providers/AuthProvider";
 import Header from "../../ui/layout/header/Header";
-import * as Pages from "../pages";
-import * as Sidebar from "../sidebars";
-import WithSidebar from "../../ui/layout/WithSidebar";
 import AuthenticatedRoutes from "../../routes/AuthenticatedRoutes";
 import { useOrganization } from "../../services/providers/OrganizationProvider";
 import { useGetUserOrgs } from "../../graphql/organization";

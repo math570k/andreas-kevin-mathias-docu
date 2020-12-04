@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useGetUserOrgs } from "../../../graphql/organization";
 import { useOrganization } from "../../../services/providers/OrganizationProvider";
 
-export default function Dropdown(props) {
+export default function Dropdown({setDropdown}) {
     const { data, error, loading } = useGetUserOrgs();
     const { setOrganization } = useOrganization();
 
@@ -17,13 +17,20 @@ export default function Dropdown(props) {
     } else if(data) {
         const orgs = data.userOrganizations
         return (
-            <div className={"header__dropdown"}>
-                {orgs.map((org, index) => {
-                    return <a href="/" key={index} onClick={(e) => {
-                        e.preventDefault();
-                        handleSetOrg(org)
-                    }}>{org.name}</a>
-                })}
+            <div className="header__dropdown transition bg-black-400 w-100">
+                <ul className="flex-col px-8">
+                    {orgs.map((org, index) => {
+                        return (
+                            <li className="my-4" key={org.id}>
+                                <a href="/" key={index} className="text-l text-white" onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSetOrg(org)
+                                    setDropdown(false)
+                                }}>{org.name}</a>
+                            </li> 
+                        )
+                    })}
+                </ul>
             </div>
         )     
     }

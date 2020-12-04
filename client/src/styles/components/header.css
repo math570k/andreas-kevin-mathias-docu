@@ -1,5 +1,5 @@
 .header {
-    &__back, &__back-button, svg, &__project, &__dropdown {
+    &__back, &__back-button, svg, &__project {
         transition: all 0.5s ease;
     }
 
@@ -28,27 +28,29 @@
     }
 
     &__dropdown {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: #CCC;
         z-index: 1;
     }
 }
 
+.header__dropdown {
+    max-height: 400px;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    transition: all 0.5s ease-out;
+}
+
 .dropdown-enter {
-    opacity: 0;
-    transform: translateY(-100px);
+    max-height: 0;
 }
 .dropdown-enter-active {
-    transform: translateX(0);
     transition: all 500ms;
+    max-height: 400px;
 }
 .dropdown-exit {
-    opacity: 1;
+    max-height: 400px;
 }
 .dropdown-exit-active {
-    transform: translateY(-100px);
-    opacity: 0;
-    transition: all 500ms;
+    transition: all 300ms;
+    max-height: 0;
 }
