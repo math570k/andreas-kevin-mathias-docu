@@ -19,8 +19,7 @@ module.exports = {
                   800: "#0d131d",
                   900: "#0b1019",
                 },
-                white: "#fff",
-                gray: "#8C929D"
+                white: "#fff"
             },
             backgroundColor: {
                 primary: '#FBFCFE'
@@ -34,12 +33,18 @@ module.exports = {
                 '1/5' : '20%',
             },
             minWidth: {
-                page: '1600px',
+                'page': '1600px',
+            },
+            maxWidth: {
+                '90ch': '90ch',
+                'page': '1600px',
             }
         },
     },
     variants: {
         extend: {},
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/typography'),
+    ],
 }
