@@ -26,15 +26,9 @@ const GET_USER_ORGS = gql`
         }
         pages {
           id
-          content
           title
+          content
           order
-          sections {
-            id
-            order
-            title
-            content
-          }
         }
       }
     }

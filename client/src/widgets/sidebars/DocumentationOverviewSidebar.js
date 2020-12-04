@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useOrganization } from "../../services/providers/OrganizationProvider";
 import Sidebar from "../../ui/layout/Sidebar";
+import {useGetPageSections} from "../../graphql/section";
 import Folder from "../../ui/icons/Folder"
 
 export default function DocumentationOverview() {
     const { activeOrganization, setActiveProject } = useOrganization();
+    const [loadSections, {called, loading, data}] = useGetPageSections();
 
     return (
         <Sidebar>

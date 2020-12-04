@@ -16,6 +16,7 @@ function OrganizationProvider(props) {
 
     React.useEffect(() => {
         if(data) {
+            console.log('data', data.userOrganizations)
             setOrganizations(data.userOrganizations);
             setActiveOrganization(data.userOrganizations[0]);
         }
