@@ -28,6 +28,14 @@ export class PageResolver {
 
             return await PageController.getPages();
         }
+
+        // Read single with section
+        @Query(() => Page)
+        async page(
+            @Arg('page_id', () => Int, { nullable: false }) project_id: number
+        ) : Promise<Page | Error | undefined> {
+            return await PageController.getPage(project_id);
+        } 
         
         // Update
         @Mutation(() => Boolean)

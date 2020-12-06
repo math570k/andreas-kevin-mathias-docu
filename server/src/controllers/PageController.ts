@@ -1,6 +1,7 @@
 import { Page } from "../entity/Page";
 import { IPageType } from "../inputTypes/IPageType";
 import { BaseEntity, getRepository } from "typeorm";
+import { Markdown } from "../helpers/markdown";
 
 export class PageController {
 
@@ -40,6 +41,24 @@ export class PageController {
     public static async removePage(id: number) : Promise<unknown> {
         try {
             return await Page.delete({ id });
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+
+    public static async getPage(id: number) : Promise<Page | undefined> {
+        const markdown = new Markdown();
+
+        try {
+            const page = await getRepository(Page)
+                .createQueryBuilder("page")
+                .where({id: id})
+                .leftJoinAndSelect("page.sections", "sections")
+                .getOne();
+
+            page?.sections.forEach(section => section.html = markdown.parseMarkdown(section.content));
+
+            return page;
         } catch (e) {
             throw new Error(e);
         }
