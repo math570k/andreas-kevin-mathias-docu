@@ -1,25 +1,25 @@
 import React from "react";
-import {Switch, Route, Redirect} from "react-router-dom";
-import AuthenticatedApp from "../widgets/apps/AuthenticatedApp";
+import {Switch, Route, Redirect, Link, useRouteMatch, useLocation} from "react-router-dom";
 import * as Page from "../widgets/pages";
-import WithSidebar from "../ui/layout/WithSidebar";
-import * as Sidebar from "../widgets/sidebars";
 
 export default function AuthenticatedRoutes() {
+
     return (
         <Switch>
-            <Route path={'/home'}>
-                <WithSidebar sidebar={<Sidebar.DocumentationOverview/>}>
-                    <Page.Home/>
-                </WithSidebar>
+            <Route path={'/:organizationId/projects'}>
+                <Page.Projects/>
             </Route>
 
-            <Route path={'/'} exact={true}>
-                <Redirect to={'/home'}/>
+            <Route path={'/:organizationId/home'}>
+                <div>this is home</div>
             </Route>
 
-            <Route path="*">
-                <Page.NoMatch404/>
+            <Route path={'/:organizationId'} render={({match}) => (
+                <Redirect to={`/${match.params.organizationId}/home`}/>
+            )}/>
+
+            <Route exact path="*">
+                <Page.Generic404/>
             </Route>
         </Switch>
     );

@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client/core";
-import { useMutation, useQuery } from "@apollo/client";
+import {useLazyQuery, useMutation, useQuery} from "@apollo/client";
 
 const REGISTER_ORG = gql`
   mutation CreateOrganization($name: String!, $logo: String!, $user_id: Int!) {
@@ -23,12 +23,6 @@ const GET_USER_ORGS = gql`
         tags {
           id
           title
-        }
-        pages {
-          id
-          title
-          content
-          order
         }
       }
     }
@@ -71,12 +65,11 @@ export const GET_ORGANIZATION_ALL = gql`
 `;
 
 
-export function useRegisterOrg() {
+  export function useRegisterOrg() {
   return useMutation(REGISTER_ORG);
 }
 
 export function useGetUserOrgs(id) {
-  console.log("ran?")
   return useQuery(GET_USER_ORGS, {
     variables: {
       user_id: id,
@@ -94,4 +87,12 @@ export function useGetOrganization(id = 7) {
       organization_id: id,
     },
   });
+}
+
+export function useLoadUserOrganizations(id) {
+    return useLazyQuery(GET_USER_ORGS, {
+      variables: {
+        user_id: id,
+      }
+    })
 }

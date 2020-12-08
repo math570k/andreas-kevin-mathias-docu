@@ -1,1 +1,2 @@
-export {default as DocumentationOverview} from "./DocumentationOverviewSidebar";
+export {default as ProjectsSidebar} from "./ProjectsSidebar";
+export {default as ProjectSidebar} from "./ProjectSidebar";

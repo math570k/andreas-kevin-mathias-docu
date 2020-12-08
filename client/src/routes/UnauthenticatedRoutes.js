@@ -21,7 +21,7 @@ export default function UnauthenticatedRoutes() {
             </Route>
 
             <Route path="*">
-                <Page.NoMatch404/>
+                <Page.Generic404/>
             </Route>
         </Switch>
     );

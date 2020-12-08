@@ -53,7 +53,11 @@ export class UserResolver {
         @Arg("password", () => String) password: string,
         @Ctx() {res}: AppContext
     ) : Promise<LoginResponse> {
-        const user = await User.findOne({ where: { email } });
+        const user = await getRepository(User)
+            .createQueryBuilder("user")
+            .where({email})
+            .leftJoinAndSelect("user.organizations", "organizations")
+            .getOne();
 
         if (!user) {
             throw new Error("Could not find user");

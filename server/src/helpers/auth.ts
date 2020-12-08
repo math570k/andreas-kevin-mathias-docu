@@ -2,6 +2,7 @@
 import {sign, verify} from "jsonwebtoken";
 import {User} from "../entity/User";
 import {Response, Request} from "express";
+import { getRepository } from "typeorm";
 
 /**
  * Create a access token for the passed user
@@ -9,7 +10,8 @@ import {Response, Request} from "express";
  * @return  {string}
  */
 export const createAccessToken = (user: User): string => {
-    return sign({userId: user.id}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: "15m"});
+    console.log(user)
+    return sign({userId: user.id, organizations: user.organizations}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: "15m"});
 }
 
 /**
@@ -65,7 +67,13 @@ export const createAccessTokenFromRefreshToken = async (req: Request, res: Respo
         return sendEmptyTokenResponse(res);
     }
 
-    const user = await User.findOne({id: payload.userId});
+    const user = await getRepository(User)
+        .createQueryBuilder("user")
+        .where({id: payload.userId})
+        .leftJoinAndSelect("user.organizations", "organizations")
+        .getOne();
+
+    console.log(user)
 
     if (!user || user.tokenVersion !== payload.tokenVersion) {
         return sendEmptyTokenResponse(res);

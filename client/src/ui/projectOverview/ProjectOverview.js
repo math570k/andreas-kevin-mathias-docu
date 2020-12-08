@@ -12,7 +12,7 @@ export default function ProjectOverview(props) {
     return (
         <div className="container py-8 flex flex-wrap">
             {activeOrganization && activeOrganization.projects.map((project) => {
-                return <ProjectCard project={project} key={project.id} />
+                return <ProjectCard project={project} key={project.id} projectId={project.id} />
             })}
         </div>
     )

@@ -13,11 +13,19 @@ const GET_PAGE_SECTIONS = gql`
     }
 `;
 
-export function useGetPageSections(id) {
+export function useLoadPageSections(page_id) {
 
     return useLazyQuery(GET_PAGE_SECTIONS, {
         variables: {
-            page_id: id
+            page_id: page_id
+        }
+    });
+}
+
+export function useGetPageSections(page_id) {
+    return useQuery(GET_PAGE_SECTIONS, {
+        variables: {
+            page_id: page_id
         }
     });
 }
