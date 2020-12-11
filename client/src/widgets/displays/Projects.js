@@ -7,10 +7,12 @@ export default function Projects(props) {
     const {projects} = useProjects();
 
     return (
-        <div className="container py-8 flex flex-wrap">
-            {projects.map((project) => {
-                return <ProjectCard project={project} key={project.id} projectId={project.id}/>
-            })}
+        <div className="container">
+            <div className="-mx-4 py-8 flex flex-wrap"> 
+                {projects.map((project) => {
+                    return <ProjectCard project={project} key={project.id} projectId={project.id}/>
+                })}
+            </div>
         </div>
     )
 }

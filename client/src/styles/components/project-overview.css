@@ -1,0 +1,27 @@
+.section-overview {
+    position: sticky;
+    height: 100%;
+    top: 50px;
+}
+
+.section-overview a {
+    text-decoration: none;
+}
+
+.section-overview .active a {
+    color: #5850EC;
+}
+
+.section-overview li:before {
+    content: "";
+    position: absolute; 
+    display: none;
+    height: 9px;
+    width: 9px;
+    left: -20px;
+    background-color: #5850EC !important;
+}
+
+.section-overview .active:before {
+    display: block;
+}

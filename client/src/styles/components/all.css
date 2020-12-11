@@ -1,3 +1,4 @@
 @import "header";
 @import "code-highlight";
-@import "sidebar"
+@import "sidebar";
+@import "project-overview.css";

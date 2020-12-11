@@ -6,6 +6,7 @@ import Section from "../../ui/section/Section";
 import ProjectOverview from "../../ui/projectOverview/ProjectOverview";
 import SectionProvider, {useSections} from "../../services/providers/PageProvider";
 import Sections from "../displays/Sections";
+import SectionOverview from "../../ui/section/SectionOverview";
 
 export default function Home() {
     const {activeProject} = useOrganization();
