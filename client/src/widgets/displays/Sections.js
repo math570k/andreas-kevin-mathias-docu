@@ -12,7 +12,7 @@ export default function Sections() {
     return (
         page.sections.map((section) => {
             return (
-                <Section key={section.id} markdown={section.content}>
+                <Section section={section} key={section.id} markdown={section.content}>
                     <SectionTitle>{section.title}</SectionTitle>
                     {parse(section.html)}
                 </Section>
