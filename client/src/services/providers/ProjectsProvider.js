@@ -39,7 +39,7 @@ export default function ProjectsProvider({children}) {
 
     const projectsAPI = {
         projects: data.projects,
-        loading,
+        loading
     }
 
     return(
