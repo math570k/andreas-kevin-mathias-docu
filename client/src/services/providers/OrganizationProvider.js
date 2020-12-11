@@ -13,11 +13,10 @@ function OrganizationProvider(props) {
 
     const history = useHistory();
     const currentLocation = useLocation();
-    const {params} = useRouteMatch('/:organizationId') || false
     const activeOrganizationId = Number(currentLocation.pathname.split('/')[1]);
     const activeOrganization = organizations.find((organization) => organization.id === activeOrganizationId );
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         if(hasOrganizations() && currentLocation.pathname === '/login' || currentLocation.pathname === '/') {
             const location = {
                 pathname: `/${organizations[0].id}/projects`,

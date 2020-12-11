@@ -1,23 +1,46 @@
 import React from "react";
+import {useCreateDraft} from "../../graphql/draft";
+import {useOrganization} from "./OrganizationProvider";
+import jwtDecode from "jwt-decode";
+import {getAccessToken} from "../utils/accessToken";
 
 const MarkdownContext = React.createContext(null);
 
-export default function MarkdownProvider({children, markdown}) {
+export default function MarkdownProvider({children, markdown, section}) {
 
     //get markdown from the currently clicked edit section
+    const {userId} = jwtDecode(getAccessToken())
+    const {activeOrganization} = useOrganization()
     const [editedMarkdown, setEditedMarkdown] = React.useState(markdown);
+    const [createDraft] = useCreateDraft();
 
     const originalMarkdown = markdown;
 
     //add function to suggest markdown and save it to the db.
 
-    function SuggestEditedMarkdown() {
-        const payload = editedMarkdown;
-        // send some request with the edited markdown to the db.
+    function suggestEditedMarkdown() {
+        createDraft({
+            variables: {
+                type: "section",
+                action: "edit",
+
+                sectionId: section.id,
+                title: section.title,
+                content: editedMarkdown,
+                order: section.order,
+                userId: userId,
+                organizationId: activeOrganization.id,
+            }
+        }).then(() => {
+            console.log('Successfully created Draft')
+        }).catch((e) => {
+            console.log(e)
+        })
     }
 
 
     const markdownAPI = {
+        suggestEditedMarkdown,
         originalMarkdown,
         editedMarkdown,
         setEditedMarkdown,

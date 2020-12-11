@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client/core";
-import {useLazyQuery, useQuery} from "@apollo/client";
+import {useLazyQuery, useMutation, useQuery} from "@apollo/client";
 
 const GET_PROJECT = gql`
     query GetProject($id: Int!) {
@@ -43,6 +43,42 @@ const GET_PROJECTS = gql`
     }
 `;
 
+
+export const CREATE_PROJECT = gql`
+    mutation CreateProject($org_id: Int!, $title: String!, $color: String!, $content: String!, $description: String!) {
+        createProject(
+            org_id: $org_id
+            project: {title: $title, color: $color, content: $content, description: $description}
+        )
+    }
+`;
+
+export function useCreateProject() {
+    return useMutation(CREATE_PROJECT, {
+        update(cache, { data: {createProject} }) {
+            cache.modify({
+                fields: {
+                    projects(existingProjects = []) {
+                        const newProjectRef = cache.writeQuery({
+                            data: createProject,
+                            query: gql`
+                                query Project {
+                                    id
+                                    title
+                                    content
+                                    color
+                                    description
+                                }
+                            `
+                        });
+                        return [...existingProjects, newProjectRef]
+                    }
+                }
+            })
+        }
+    })
+}
+
 export function useGetProjects(organizationId) {
     return useQuery(GET_PROJECTS, {
         variables: {
@@ -58,3 +94,4 @@ export function useGetProject(project_id) {
         }
     })
 }
+
