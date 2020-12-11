@@ -1,5 +1,5 @@
 import React from "react";
-import {useCreateDraft} from "../../graphql/draft";
+import {useAddDraftMutation} from "../../graphql/draft";
 import {useOrganization} from "./OrganizationProvider";
 import jwtDecode from "jwt-decode";
 import {getAccessToken} from "../utils/accessToken";
@@ -12,7 +12,7 @@ export default function MarkdownProvider({children, markdown, section}) {
     const {userId} = jwtDecode(getAccessToken())
     const {activeOrganization} = useOrganization()
     const [editedMarkdown, setEditedMarkdown] = React.useState(markdown);
-    const [createDraft] = useCreateDraft();
+    const [createDraft] = useAddDraftMutation();
 
     const originalMarkdown = markdown;
 
@@ -21,15 +21,18 @@ export default function MarkdownProvider({children, markdown, section}) {
     function suggestEditedMarkdown() {
         createDraft({
             variables: {
-                type: "section",
-                action: "edit",
-
-                sectionId: section.id,
-                title: section.title,
-                content: editedMarkdown,
-                order: section.order,
-                userId: userId,
-                organizationId: activeOrganization.id,
+                draft: {
+                    type: "section",
+                    action: "edit",
+                    content: {
+                        sectionId: section.id,
+                        title: section.title,
+                        content: editedMarkdown,
+                        order: section.order,
+                    },
+                    userId: userId,
+                    organizationId: activeOrganization.id
+                }
             }
         }).then(() => {
             console.log('Successfully created Draft')

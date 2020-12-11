@@ -1,11 +1,16 @@
+import jwtDecode from "jwt-decode";
 import React, { useState } from "react";
 import { useAddDraftMutation } from "../../graphql/draft";
+import { getAccessToken } from "../utils/accessToken";
+import { useOrganization } from "./OrganizationProvider";
 
 const ProjectDraftContext = React.createContext(null);
 
 export default function ProjectDraftProvider({children}) {
     const [form, setForm] = useState({title: "", color: "#2a323e", description: "", content: ""});
     const [handleFormSubmit] = useAddDraftMutation();
+    const {activeOrganization} = useOrganization();
+    const {userId} = jwtDecode(getAccessToken())
 
     const createProjectDraft = (data) => {
         console.log(data);
@@ -21,8 +26,8 @@ export default function ProjectDraftProvider({children}) {
                         description: data.description,
                         content: data.content
                     },
-                    userId: 3,
-                    organizationId: 2
+                    userId: userId,
+                    organizationId: activeOrganization.id
                 }
             }
         });
