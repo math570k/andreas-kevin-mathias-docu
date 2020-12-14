@@ -1,28 +1,28 @@
+import React, { createContext, useState } from "react";
 import jwtDecode from "jwt-decode";
-import React, { useState } from "react";
 import { useAddDraftMutation } from "../../graphql/draft";
 import { getAccessToken } from "../utils/accessToken";
 import { useOrganization } from "./OrganizationProvider";
 
-const ProjectDraftContext = React.createContext(null);
+const PageDraftContext = createContext(null);
 
-export default function ProjectDraftProvider({children}) {
+export default function PageDraftProvider({children}) {
+
     const [form, setForm] = useState({title: "", color: "#2a323e", description: "", content: ""});
     const [handleFormSubmit] = useAddDraftMutation();
     const {activeOrganization} = useOrganization();
     const {userId} = jwtDecode(getAccessToken())
 
-    const createProjectDraft = (data) => {
+    const createPageDraft = (data) => {
         handleFormSubmit({
             variables: {
                 draft: {
-                    type: "project",
+                    type: "page",
                     action: "new",
                     content: {
                         title: data.title,
-                        color: data.color,
-                        description: data.description,
-                        content: data.content
+                        content: data.content,
+                        order: data.order
                     },
                     userId: userId,
                     organizationId: activeOrganization.id
@@ -34,20 +34,20 @@ export default function ProjectDraftProvider({children}) {
     const projectDraftApi = {
         form,
         setForm,
-        createProjectDraft
+        createPageDraft
     }
 
     return (
-        <ProjectDraftContext.Provider value={projectDraftApi}>
+        <PageDraftContext.Provider value={projectDraftApi}>
             {children}
-        </ProjectDraftContext.Provider>
+        </PageDraftContext.Provider>
     )
 }
 
-export function useProjectDraft() {
-    const context = React.useContext(ProjectDraftContext);
+export function usePageDraft() {
+    const context = React.useContext(PageDraftContext);
     if (context === undefined) {
-        throw new Error(`useProjectDraft must be used within a ProjectDraftContext`)
+        throw new Error(`usePageDraft must be used within a PageDraftContext`)
     }
     return context
 }

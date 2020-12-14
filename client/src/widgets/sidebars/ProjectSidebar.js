@@ -2,16 +2,32 @@ import React from "react";
 import Sidebar from "../../ui/layout/Sidebar";
 import Folder from "../../ui/icons/Folder";
 import {useProject} from "../../services/providers/ProjectProvider";
-import {useSections} from "../../services/providers/PageProvider";
 import {Link, useRouteMatch} from "react-router-dom";
+import useModal from "../../hooks/useModal";
+import Modal from "../../ui/modal/Modal";
+import CreatePage from "../forms/CreatePage";
+import PageDraftProvider from "../../services/providers/PageDraftProvider";
 
 // render a single project in the sidebar in it's open state, showing all it's pages.
+
+const NewPage = ({closeModal}) => {
+    return (
+        <Modal
+            close={closeModal}
+        >
+            <PageDraftProvider>
+                <CreatePage closeModal={closeModal} />
+            </PageDraftProvider>
+        </Modal>
+    )
+}
 
 export default function ProjectSidebar() {
 
     // get the currently active project.
     const {project} = useProject();
     const {url} = useRouteMatch();
+    const { open, openModal, closeModal } = useModal();
 
 
     return (
@@ -40,7 +56,10 @@ export default function ProjectSidebar() {
             </ul>
 
             <div className={'px-8 py-8'}>
-                <button className={'button'}>Add Page +</button>
+                <button onClick={() => openModal()} className={'button'}>Add Page +</button>
+                {open ? (
+                    <NewPage closeModal={closeModal} />
+                ) : ''}
             </div>
         </Sidebar>
     )

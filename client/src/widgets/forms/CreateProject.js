@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BlockPicker } from 'react-color';
 import {useProjectDraft} from "../../services/providers/ProjectDraftProvider";
 
