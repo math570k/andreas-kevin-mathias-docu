@@ -28,6 +28,9 @@ export class Project extends BaseEntity {
     @Column("text")
     content: string;
 
+    @Field({ nullable: true })
+    html: string;
+
     @Field(() => [Tag])
     @OneToMany(() => Tag, tag => tag.project, {nullable: true})
     tags: Tag[]

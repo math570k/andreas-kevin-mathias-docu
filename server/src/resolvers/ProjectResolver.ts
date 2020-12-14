@@ -1,21 +1,8 @@
-import {BaseEntity, getRepository} from 'typeorm';
-import {Arg, Mutation, Resolver, Query, InputType, Field, Int} from "type-graphql";
+import {BaseEntity} from 'typeorm';
+import {Arg, Mutation, Resolver, Query, Int} from "type-graphql";
 import {Project} from "../entity/Project";
-
-@InputType()
-class IProjectType {
-    @Field()
-    color: string
-
-    @Field()
-    title: string
-
-    @Field()
-    description: string
-
-    @Field()
-    content: string
-}
+import { IProjectType } from '../inputTypes/IProjectType';
+import { ProjectController } from '../controllers/ProjectController';
 
 @Resolver()
 export class ProjectResolver {
@@ -25,17 +12,8 @@ export class ProjectResolver {
     async createProject(
         @Arg("org_id", () => Int) org_id: BaseEntity,
         @Arg("project", () => IProjectType) project: IProjectType
-    ): Promise<boolean | Error> {
-
-        await Project.create({...project, organization: org_id}).save().catch((err: any) => {
-            switch (err.code) {
-                case 'ER_DUP_ENTRY':
-                    return Error("Something went wrong")
-            }
-            return;
-        })
-
-        return true
+    ): Promise<unknown | Error> {
+        return await ProjectController.addProject(org_id, project);
     }
 
     // Read single
@@ -43,19 +21,7 @@ export class ProjectResolver {
     async project(
         @Arg("id", () => Int) id: number
     ): Promise<Project | undefined | Project[]> {
-        if (id) {
-            const project = await getRepository(Project)
-                .createQueryBuilder("project")
-                .where({id: id})
-                .leftJoinAndSelect("project.pages", "pages")
-                .leftJoinAndSelect("project.tags", "tags")
-                .leftJoinAndSelect("pages.sections", "sections")
-                .getOne()
-
-            return project;
-        } else {
-            return Project.find();
-        }
+        return await ProjectController.getProject(id);
     }
 
 
@@ -64,18 +30,10 @@ export class ProjectResolver {
         @Arg("organization_id", () => Int, {nullable: true}) organization_id?: BaseEntity,
     ): Promise<Project[]> {
         if (organization_id) {
-            const projects = await getRepository(Project)
-                .createQueryBuilder("projects")
-                .where({organization: organization_id})
-                .leftJoinAndSelect("projects.pages", "pages")
-                .leftJoinAndSelect("projects.tags", "tags")
-                .leftJoinAndSelect("pages.sections", "sections")
-                .getMany()
-
-            return projects
+            return await ProjectController.getProjectList(organization_id);
         }
-
-        return Project.find();
+        
+        return await ProjectController.getProjectList();
     }
 
 
@@ -83,16 +41,14 @@ export class ProjectResolver {
     @Mutation(() => Boolean)
     async updateProject(
         @Arg("id", () => Int) id: number,
-        @Arg("description", () => IProjectType) description: IProjectType
-    ): Promise<boolean> {
-        await Project.update({id}, description);
-        return true
+        @Arg("description", () => IProjectType) project: IProjectType
+    ): Promise<unknown> {
+        return await ProjectController.updateProject(id, project);
     }
 
     // Delete
     @Mutation(() => Boolean)
-    async deleteProject(@Arg("id", () => Int) id: number): Promise<boolean> {
-        await Project.delete({id});
-        return true;
+    async deleteProject(@Arg("id", () => Int) id: number): Promise<unknown> {
+        return await ProjectController.deleteProject(id);
     }
 }

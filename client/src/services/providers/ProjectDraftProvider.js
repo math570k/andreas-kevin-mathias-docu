@@ -19,10 +19,13 @@ export default function ProjectDraftProvider({children}) {
                     type: "project",
                     action: "new",
                     content: {
-                        title: data.title,
-                        color: data.color,
-                        description: data.description,
-                        content: data.content
+                        organizationId: activeOrganization.id,
+                        project: {
+                            title: data.title,
+                            color: data.color,
+                            description: data.description,
+                            content: data.content
+                        }
                     },
                     userId: userId,
                     organizationId: activeOrganization.id

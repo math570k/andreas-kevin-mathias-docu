@@ -26,6 +26,9 @@ export class User extends BaseEntity {
     @Column("int", { default: 0 })
     tokenVersion: number;
 
-    @ManyToMany(() => Organization, organization => organization.administrators)
+    @ManyToMany(() => Organization, organization => organization.users)
     organizations: Organization[];
+
+    @ManyToMany(() => Organization, organization => organization.admins)
+    admin: Organization[];
 }

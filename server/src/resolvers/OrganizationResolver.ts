@@ -37,7 +37,8 @@ export class OrganizationResolver {
         
         const user = await User.findOne({id: user_id}) as User;
         
-        org.administrators = [user];
+        org.admins = [user];
+        org.users = [user];
         org = await Organization.save(org);
 
         return true
@@ -90,13 +91,13 @@ export class OrganizationResolver {
         const organization = await getRepository(Organization)
             .createQueryBuilder("organization")
             .where({id: organization_id})
-            .leftJoinAndSelect("organization.administrators", "user")
+            .leftJoinAndSelect("organization.users", "user")
             .getOne()
             
-        const admins = await organization?.administrators
+        const users = await organization?.users
 
-        if(admins) {
-            return admins
+        if(users) {
+            return users
         } 
 
         return Error("No users found");

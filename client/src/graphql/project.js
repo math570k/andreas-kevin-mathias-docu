@@ -9,6 +9,7 @@ const GET_PROJECT = gql`
             title
             description
             content
+            html
             pages {
                 id
                 title

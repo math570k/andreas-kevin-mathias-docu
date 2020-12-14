@@ -24,5 +24,9 @@ export class Organization extends BaseEntity {
 
     @ManyToMany(() => User, user => user.organizations, { cascade: true })
     @JoinTable()
-    administrators: User[]
+    users: User[];
+
+    @ManyToMany(() => User, user => user.admin, { cascade: true })
+    @JoinTable()
+    admins: User[];
 }

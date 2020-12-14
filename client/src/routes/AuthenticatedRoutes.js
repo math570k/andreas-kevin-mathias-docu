@@ -6,6 +6,10 @@ export default function AuthenticatedRoutes() {
 
     return (
         <Switch>
+            <Route path={'/:organizationId/actions'}>
+                <Page.Actions />
+            </Route>
+
             <Route path={'/:organizationId/projects'}>
                 <Page.Projects/>
             </Route>

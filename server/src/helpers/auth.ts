@@ -11,7 +11,7 @@ import { getRepository } from "typeorm";
  */
 export const createAccessToken = (user: User): string => {
     console.log(user)
-    return sign({userId: user.id, organizations: user.organizations}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: "15m"});
+    return sign({userId: user.id, organizations: user.organizations, admin: user.admin}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: "15m"});
 }
 
 /**

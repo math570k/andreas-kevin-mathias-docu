@@ -9,3 +9,4 @@ export {default as Project} from "./Project";
 export {default as ProjectIntroduction} from "./ProjectIntroduction";
 export {default as ProjectPage} from "./ProjectPage";
 export {default as NoOrganization} from "./NoOrganization";
+export {default as Actions} from "./Actions";

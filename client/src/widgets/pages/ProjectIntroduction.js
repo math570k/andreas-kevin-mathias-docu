@@ -1,7 +1,7 @@
 import React from "react";
 import * as Template from "../../ui/templates";
 import {useProject} from "../../services/providers/ProjectProvider";
-
+import parse from 'html-react-parser';
 
 export default function ProjectIntroduction() {
 
@@ -10,7 +10,7 @@ export default function ProjectIntroduction() {
     return (
         <Template.Page>
                 <div>
-                    {project.content}
+                    {parse(project.html)}
                 </div>
         </Template.Page>
     )

@@ -5,6 +5,7 @@ import { Draft } from "../entity/Draft";
 import { ObjectId } from "mongodb";
 import { SectionController } from "../controllers/SectionController";
 import { PageController } from "../controllers/PageController";
+import { ProjectController } from "../controllers/ProjectController";
 
 export class DraftResolver {
     private collection = Mongo.client.db('draft').collection('drafts');
@@ -116,6 +117,10 @@ export class DraftResolver {
                         await PageController.addPage(draft.content.projectId, draft.content.page);
                     }
 
+                    if (draft.type === "project") {
+                        await ProjectController.addProject(draft.content.organizationId, draft.content.project);
+                    }
+
                     // Delete the draft after it has been comitted
                     await this.collection.deleteOne({ _id: new ObjectId(id) });
 
@@ -132,6 +137,10 @@ export class DraftResolver {
 
                     if (draft.type === "page") {
                         await PageController.editPage(draft.content.pageId, draft.content.page);
+                    }
+
+                    if (draft.type === "project") {
+                        await ProjectController.updateProject(draft.content.organizationId, draft.content.project);
                     }
 
                     // Delete the draft after it has been comitted

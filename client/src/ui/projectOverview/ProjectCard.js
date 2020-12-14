@@ -23,8 +23,7 @@ export default function ProjectCard({project, projectId}) {
 
                         {/* Project description */}
                         <div className="mt-4 font-we">
-                            {/* Erstat med project description */}
-                            <p className="text-black-400">{project.content}</p>
+                            <p className="text-black-400">{project.description}</p>
                         </div>
 
                         <div className="flex flex-wrap">
