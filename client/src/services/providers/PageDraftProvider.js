@@ -20,9 +20,12 @@ export default function PageDraftProvider({children}) {
                     type: "page",
                     action: "new",
                     content: {
-                        title: data.title,
-                        content: data.content,
-                        order: data.order
+                        page: {
+                            title: data.title,
+                            content: data.content,
+                            order: data.order || 0
+                        },
+                        projectId: 2
                     },
                     userId: userId,
                     organizationId: activeOrganization.id

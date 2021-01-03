@@ -57,6 +57,7 @@ export class UserResolver {
             .createQueryBuilder("user")
             .where({email})
             .leftJoinAndSelect("user.organizations", "organizations")
+            .leftJoinAndSelect("user.admin", "admin")
             .getOne();
 
         if (!user) {
@@ -72,7 +73,8 @@ export class UserResolver {
         sendRefreshToken(res, createRefreshToken(user));
 
         return {
-            accessToken: createAccessToken(user)
+            accessToken: createAccessToken(user),
+            admin: user.admin
         };
     }
 

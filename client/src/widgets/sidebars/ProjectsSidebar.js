@@ -7,6 +7,7 @@ import useModal from "../../hooks/useModal";
 import Modal from "../../ui/modal/Modal";
 import CreateProject from "../forms/CreateProject";
 import ProjectDraftProvider, {useProjectDraft} from "../../services/providers/ProjectDraftProvider";
+import { useOrganization } from "../../services/providers/OrganizationProvider";
 
 const NewProject = ({closeModal}) => {
     return (
@@ -24,13 +25,14 @@ export default function DocumentationOverview() {
     const {projects} = useProjects();
     let {url} = useRouteMatch();
     const { open, openModal, closeModal } = useModal();
+    const { activeOrganization } = useOrganization();
 
     return (
         <Sidebar>
             <ul>
                 { projects.map((project) => (
                     <li className={'px-8 py-6 border-b border-primary-500 w-100'} key={project.id}>
-                        <Link to={`${url}/${project.id}`}>
+                        <Link to={`/${activeOrganization.id}/projects/${project.id}`}>
                             <div className={'folder flex items-center'}>
                                 <Folder color={project.color}/>
                                 <h2 className="ml-4">

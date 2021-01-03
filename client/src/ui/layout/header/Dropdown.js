@@ -2,7 +2,7 @@ import React from "react";
 import {useOrganization} from "../../../services/providers/OrganizationProvider";
 import {Link} from "react-router-dom";
 
-export default function Dropdown({setDropdown}) {
+export default function Dropdown({setDropdown, onRouteClick}) {
     const {organizations} = useOrganization();
 
     return (
@@ -11,7 +11,7 @@ export default function Dropdown({setDropdown}) {
                 {organizations.map((org, index) => {
                     return (
                         <li className="my-4" key={org.id}>
-                            <Link to={`/${org.id}/projects`} className="text-l text-white">
+                            <Link to={`/${org.id}/projects`} onClick={() => onRouteClick()} className="text-l text-white">
                                 {org.name}
                             </Link>
                         </li> 

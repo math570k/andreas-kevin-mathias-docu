@@ -12,6 +12,7 @@ function AuthProvider(props) {
         status: 'idle',
         error: null,
         user: null,
+        admin: []
     })
 
     const fetchInitialAccessToken = () => {
@@ -23,12 +24,21 @@ function AuthProvider(props) {
         })
 
         refreshAccessToken()
-            .then(accessToken => {
-                console.log('got in here')
-                setState({
+            .then(data => {
+                if (data) {
+                    return setState({
+                        status: 'resolved',
+                        error: null,
+                        user: data.accessToken,
+                        admin: data.admin.map(admin => admin.id)
+                    })
+                }
+
+                return setState({
                     status: 'resolved',
                     error: null,
-                    user: accessToken,
+                    user: null,
+                    admin: []
                 })
             })
     }
@@ -73,7 +83,8 @@ function AuthProvider(props) {
                 setState({
                     status: 'resolved',
                     error: null,
-                    user: data.login.accessToken
+                    user: data.login.accessToken,
+                    admin: data.login.admin.map(admin => admin.id)
                 })
             })
             .catch(error => {
@@ -99,6 +110,7 @@ function AuthProvider(props) {
         register,
         login,
         logout,
+        admin: state.admin,
         user: state.user,
         error: state.error,
     }

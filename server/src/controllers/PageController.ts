@@ -6,6 +6,7 @@ import { Markdown } from "../helpers/markdown";
 export class PageController {
 
     public static async addPage(project_id: BaseEntity, page: IPageType) : Promise<unknown | Error> {
+        console.log(project_id, page);
         try {
             return await Page.create({...page, project: project_id}).save().catch((err: any) => {
                 switch (err.code) {

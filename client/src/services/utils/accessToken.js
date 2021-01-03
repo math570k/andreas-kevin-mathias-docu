@@ -31,7 +31,7 @@ export function refreshAccessToken() {
                 if(data.ok) {
                     console.log('### Refreshed token ###', data.accessToken)
                     setAccessToken(data.accessToken)
-                    return resolve(data.accessToken)
+                    return resolve(data)
                 }
 
                 return resolve(null);

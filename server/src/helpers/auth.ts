@@ -10,7 +10,6 @@ import { getRepository } from "typeorm";
  * @return  {string}
  */
 export const createAccessToken = (user: User): string => {
-    console.log(user)
     return sign({userId: user.id, organizations: user.organizations, admin: user.admin}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: "15m"});
 }
 
@@ -71,9 +70,8 @@ export const createAccessTokenFromRefreshToken = async (req: Request, res: Respo
         .createQueryBuilder("user")
         .where({id: payload.userId})
         .leftJoinAndSelect("user.organizations", "organizations")
+        .leftJoinAndSelect("user.admin", "admin")
         .getOne();
-
-    console.log(user)
 
     if (!user || user.tokenVersion !== payload.tokenVersion) {
         return sendEmptyTokenResponse(res);
@@ -81,7 +79,7 @@ export const createAccessTokenFromRefreshToken = async (req: Request, res: Respo
 
     sendRefreshToken(res, createRefreshToken(user));
 
-    return res.send({ok: true, accessToken: createAccessToken(user)});
+    return res.send({ok: true, accessToken: createAccessToken(user), admin: user.admin});
 }
 
 /**
